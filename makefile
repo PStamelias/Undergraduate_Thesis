@@ -6,5 +6,4 @@ compile:
 	javac TikTokCrawling.java
 
 clean:
-	rm -r *.class *~
-	rm **/*.class
+	rm -r TikTokCrawling.class
