@@ -21,5 +21,6 @@ class TikTokCrawling{
     public static void main (String[] args) throws IOException{
    		String html="https://www.tiktok.com/foryou?lang=en";
 	   	Document doc = Jsoup.connect(html).get();  
+	   	
     }
 }
