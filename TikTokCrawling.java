@@ -22,19 +22,12 @@ class TikTokCrawling{
     public static void main (String[] args) throws IOException{
    		String url="https://www.tiktok.com/foryou?lang=en";
    		Document doc = Jsoup.connect(url).get();
-   		Elements g=doc.getElementsByTag("span");
-   		for(Element n:g){
-   			Elements h=n.getElementsByTag("div");
-   			System.out.println(h.size());
-   		}
+   		Elements photos = doc.select("div[id=__next]");
+   		Elements e = photos.select("div[id=main]");
+   		Elements t=e.select("div.jsx-3309473600.main-body.page-with-header");
+   		Elements l=t.select("div.jsx-4154131465.share-layout");
+   		Elements s=l.select("main.share-layout-main");
+   		System.out.println("size="+s.size());
    	}
 }
 
-/*Elements tags=doc.getElementsByTag("div");
-   		for(Element d:tags){
-   			Elements g=d.getElementsByTag("span");
-   			for(Element t:g){
-   				Element c=t.getElementsByTag("div").first();
-   				Element m=c.getElementsByTag("div").first();
-   			}
-   		}*/
