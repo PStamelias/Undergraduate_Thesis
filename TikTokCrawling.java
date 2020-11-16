@@ -93,6 +93,10 @@ class TikTokCrawling{
 	    Video[] video_Table = new Video[coun];
 	    for(int e=0;e<coun;e++)
 	    	video_Table[e]=new Video();
+	    FileReader fl = new FileReader(file);
+	    while ((i=fl.read()) != -1) {
+	    	
+	    } 
    	}
 }
 
