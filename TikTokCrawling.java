@@ -124,6 +124,7 @@ class TikTokCrawling{
 					VideoTable[j].set_Likes_Number(f.Likes_Number(h));
 					VideoTable[j].set_Commend_Number(f.Comments_Number(h));
 					VideoTable[j].set_Shares_Number(f.Shares_Number(h));
+					j+=1;
 				}
 				Fun2 f2=new Fun2();
 				try{
