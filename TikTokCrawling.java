@@ -2,26 +2,32 @@ import java.io.IOException;
 import java.util.logging.*;
 import org.jsoup.Jsoup;
 import java.io.*; 
+import org.openqa.selenium.JavascriptExecutor;	
+import java.net.URL;
 import java.sql.SQLException; 
 import java.sql.Statement;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.ThreadLocalRandom;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import java.io.BufferedWriter;
 import org.jsoup.select.Elements;
 import java.io.FileWriter;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.safari.SafariDriver;
 class Video{
 	public int ID;
 	public String Name;
 	public String Text;
 	public String Sound_Tag;
-	public int Likes_Number;
-	public int Comments_Number;
-	public int Shares_Number;
+	public String Likes_Number;
+	public String Comments_Number;
+	public String Shares_Number;
 	Video(){
-		this.Likes_Number=0;
-		this.Comments_Number=0;
-		this.Shares_Number=0;
+		
 	}
 	public  void set_ID(int ID){
 		this.ID=ID;
@@ -35,13 +41,13 @@ class Video{
 	public  void set_SoundTag(String Sound_Tag){
 		this.Sound_Tag=Sound_Tag;
 	}
-	public  void set_Likes_Number(int Likes){
+	public  void set_Likes_Number(String Likes){
 		this.Likes_Number=Likes;
 	}
-	public  void set_Commend_Number(int Comments){
+	public  void set_Commend_Number(String Comments){
 		this.Comments_Number=Comments;
 	}
-	public  void set_Shares_Number(int Shares){
+	public  void set_Shares_Number(String Shares){
 		this.Shares_Number=Shares;
 	}
 }
@@ -50,58 +56,71 @@ class TikTokCrawling{
     public static void main (String[] args) throws IOException{
    		String url="https://www.tiktok.com/foryou?lang=en";
    		String file=get_info_from_URL(url);
-   		Create_Database_and_put_info_on_it(file);
+   		//Create_Database_and_put_info_on_it(file);
 
    	}
    	public static String get_info_from_URL(String url) throws IOException{
-   		Document doc = Jsoup.connect(url).get();
+   		System.setProperty("/home/prokopis/Downloads/chromedriver_linux64", "/usr/bin/google-chrome-stable");
+   		BufferedWriter out = null;
+   		int ID=1;
+   		WebDriver driver = new ChromeDriver();
+	    driver.get(url);
+	    JavascriptExecutor jse = (JavascriptExecutor)driver;
+		jse.executeScript("window.scrollBy(0,5000)");
+	    String html = driver.getPageSource();
+   		Document doc = Jsoup.parse(html);
    		Elements photos = doc.select("div[id=__next]");
    		Elements e = photos.select("div[id=main]");
    		Elements t=e.select("div.jsx-3309473600.main-body.page-with-header");
    		Elements l=t.select("div.jsx-4154131465.share-layout");
    		Elements s=l.select("main.share-layout-main");
-   		Elements x=s.select("div");
-   		/*for(Element a:x){
-   			System.out.println("s="+a.attr("class"));
-   		}*/
-   		BufferedWriter out = null;
-   		try {
-		    FileWriter fstream = new FileWriter("out.txt", true); //true tells to append data.
-		    out = new BufferedWriter(fstream);
-		    for(int i=0;i<10000;i++){
-		    	int randomNum;
-		    	String se=String.valueOf(i+1);
-		    	out.write(se);
-		    	out.write("|");
-		    	out.write("bachelor1");
-		    	out.write("|");
-		    	out.write("bachelorGR");
-		    	out.write("|");
-		    	out.write("Λίγο πριν του φύγω #fyp #foryoupage @justgiwrgos");
-		    	out.write("|");
-		    	randomNum = ThreadLocalRandom.current().nextInt(0,40000000 + 1);
-		    	se=String.valueOf(randomNum);
-		    	out.write(se);
-		    	out.write("|");
-		    	randomNum = ThreadLocalRandom.current().nextInt(0,40000000 + 1);
-		    	se=String.valueOf(randomNum);
-		    	out.write(se);
- 				out.write("|");
- 				randomNum = ThreadLocalRandom.current().nextInt(0,40000000 + 1);
- 				se=String.valueOf(randomNum);
-		    	out.write(se);
-		    	out.write("\n");
-		    }
-		}
-		catch (IOException b) {
-		    System.err.println("Error: " + b.getMessage());
-		}
-		finally {
-		    if(out != null) {
-		        out.close();
-		    }
-		}
-		return "out.txt";
+   		Elements span=s.select("span.lazyload-wrapper");
+   		FileWriter fstream = new FileWriter("out.txt", true); //true tells to append data.
+		out = new BufferedWriter(fstream);
+   		for(Element m:span){
+   			Element f=m.select("div.jsx-179939359.jsx-2715883145.feed-item-content").first();
+   			if(f==null)
+   				continue;
+   			String id_string=String.valueOf(ID); 
+   			out.write(id_string);
+   			out.write("|");
+   			Elements te=f.select("div.jsx-442964640.author-info-content.tt-author-info.jsx-3783556929.jsx-242381890");
+   			Elements re=te.select("h3");
+   			out.write(re.text());
+   			out.write("|");
+   			Elements y=f.select("div.tt-video-meta-caption.jsx-3783556929.jsx-1761782793");
+   			Elements d =f.select("strong");
+   			String tee="";
+   			for(Element kj:d){
+   				tee=tee+kj.text();
+   			}
+   			out.write(tee);
+   			out.write("|");
+   			Elements bv=f.select("div.jsx-698935136.tt-video-music.item-music-info-V4.jsx-2204354762.black");
+   			Element sv=bv.select("div.jsx-698935136.video-music-content.pause.music-title-decoration").first();
+   			out.write(sv.text());
+   			out.write("|");
+   			Element ko=f.select("div.jsx-179939359.jsx-2715883145.item-video-container").first();
+   			Element lo=ko.select("div.jsx-1045706868.pc-action-bar.engagement-v2.horizontal").first();
+   			if(lo==null)
+   				lo=ko.select("div.jsx-1045706868.pc-action-bar.item-action-bar.vertical").first();
+   			if(lo==null)
+   				lo=ko.select("div.jsx-1045706868.pc-action-bar.item-action-bar-v4.horizontal").first();
+   			Elements ui=lo.select("strong");
+   			int coun=1;
+   			for(Element eee:ui){
+   				out.write(eee.text());
+   				if(coun==3)
+   					break;
+   				out.write("|");
+   				coun+=1;
+   			}
+   			ID+=1;
+   			out.write("\n");
+   		}
+   		out.close();
+   		driver.close();
+   		return "out.txt";
    	}
    	public static void Create_Database_and_put_info_on_it(String file) throws IOException{
    		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
@@ -128,7 +147,7 @@ class TikTokCrawling{
 				}
 				Fun2 f2=new Fun2();
 				try{
-					f2.MySQL_Database_Creation(VideoTable,coun); 
+					f2.PostgreSQL_Database_Creation(VideoTable,coun); 
 				}catch(Exception e){
 					System.out.println("Error on database");
 					return ;

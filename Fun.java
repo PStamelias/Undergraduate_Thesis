@@ -1,3 +1,7 @@
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import java.io.BufferedWriter;
+import org.jsoup.select.Elements;
 public  class Fun{
 	public  int Id(String h){
 		int Number=0;
@@ -65,8 +69,8 @@ public  class Fun{
 		}
 		return g;
 	}
-	public int Likes_Number(String h){
-		int Number=0;
+	public String Likes_Number(String h){
+		String g="";
 		int pos=0;
 		int times=0;
 		for(int i=0;i<h.length();i++){
@@ -81,13 +85,12 @@ public  class Fun{
 		for(int i=pos;i<h.length();i++){
 			if(h.charAt(i)=='|')
 				break;
-			char charAtpos = h.charAt(i);
-			Number=Number*10+charAtpos-'0';
+			g=g+h.charAt(i);
 		}
-		return Number;
+		return g;
 	}
-	public int Comments_Number(String h){
-		int Number=0;
+	public String Comments_Number(String h){
+		String g="";
 		int pos=0;
 		int times=0;
 		for(int i=0;i<h.length();i++){
@@ -102,13 +105,12 @@ public  class Fun{
 		for(int i=pos;i<h.length();i++){
 			if(h.charAt(i)=='|')
 				break;
-			char charAtpos = h.charAt(i);
-			Number=Number*10+charAtpos-'0';
+			g=g+h.charAt(i);
 		}
-		return Number;
+		return g;
 	}
-	public int Shares_Number(String h){
-		int Number=0;
+	public String Shares_Number(String h){
+		String g="";
 		int pos=0;
 		int times=0;
 		for(int i=0;i<h.length();i++){
@@ -123,9 +125,9 @@ public  class Fun{
 		for(int i=pos;i<h.length();i++){
 			if(h.charAt(i)=='|')
 				break;
-			char charAtpos = h.charAt(i);
-			Number=Number*10+charAtpos-'0';
+			g=g+h.charAt(i);
 		}
-		return Number;
+		return g;
 	}
+
 }
