@@ -7,7 +7,7 @@ public  class Fun2{
     String text= "CREATE TABLE IF NOT EXISTS TIKTOKVIDEOTABLE " +"(ID INT PRIMARY KEY     NOT NULL," +" NAME           CHAR(50)   NOT NULL, " +" TEXT            TEXT     NOT NULL, " +" SOUND_TAG     CHAR(500) , " +" LIKES_NUMBER         CHAR(50) ,"+ "COMMENTS_NUMBER         CHAR(50) ,"+ "SHARES_NUMBER      CHAR(50) )";
     return text;
   }
-	public  String PostgreSQL_Database_Creation(Video[] table,int coun) throws Exception{
+	public  String PostgreSQL_Database_Creation(Video[] table,int coun) throws Exception{/*Creating DataBase Function*/
     	Connection c = null;
       try{
         Class.forName("org.postgresql.Driver");
@@ -25,7 +25,7 @@ public  class Fun2{
       }
       return null;
 	}
-  public static void put_Values_toDatabase(Connection c,Video[] table,int coun,Statement stmt) throws Exception{
+  public static void put_Values_toDatabase(Connection c,Video[] table,int coun,Statement stmt) throws Exception{/*Insert Values from out.txt file to Database*/
     for(int i=0;i<coun;i++){
       int Id=table[i].ID;
       String name=table[i].Name;
