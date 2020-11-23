@@ -119,7 +119,27 @@ class TikTokCrawling{
    			Elements ui=lo.select("strong");/*strong classes hold the data*/
    			int coun=1;
    			for(Element eee:ui){
-   				out.write(eee.text());
+               String data=eee.text();
+               if(data.contains("M")==true||data.contains("K")==true||data.contains("B")==true){
+                  String my_string="";
+                  for(int i=0;i<data.length();i++){
+                     char charAtpos = data.charAt(i);
+                     if((charAtpos>='0'&&charAtpos<='9')||charAtpos=='.')
+                        my_string=my_string+charAtpos;
+                     else 
+                        break;
+                  }
+                  float my_float=Float.parseFloat(my_string);  
+                  if(data.contains("M")==true)
+                     my_float*=1000000;
+                  else if(data.contains("K"))
+                     my_float*=1000;
+                  else if(data.contains("B"))
+                     my_float*=1000000000;
+                  int g=(int)my_float;
+                  data=String.valueOf(g);
+               }
+   				out.write(data);
    				if(coun==3)
    					break;
    				out.write("|");
