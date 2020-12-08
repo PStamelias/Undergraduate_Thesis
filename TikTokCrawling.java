@@ -69,7 +69,8 @@ class TikTokCrawling{
          Load_More_classes(jse);
          try{
             Thread.sleep(10000);
-         }catch(Exception e){
+         }
+         catch(Exception e){
             System.err.println(e);
          }
          //Load_More_classes(jse);                                                                                                                                                                                                                                                                                                                                                                                                 
@@ -77,16 +78,15 @@ class TikTokCrawling{
          Document doc = Jsoup.parse(html);/*parse the html code*/
          /*Navigation to info of videos*/
          Elements photos = doc.select("div[id=__next]");
-         Elements e = photos.select("div[id=main]");
-         Elements t=e.select("div.jsx-3309473600.main-body.page-with-header");
-         Elements l=t.select("div.jsx-4154131465.share-layout");
-         Elements s=l.select("main.share-layout-main");
-         Elements span=s.select("span.lazyload-wrapper");
-         /*****************************/
+         Elements a = photos.select("div[id=main]");
+         Elements b= a.select("div[class=tt-feed]");
+         Elements c=b.select("div.jsx-1115548107.video-feed-container");
+         System.out.println(c.size());
+         Elements span=b.select("span.lazyload-wrapper");
+         System.out.println(span.size());
          FileWriter fstream = new FileWriter("out.txt", true); //true tells to append data.
          out = new BufferedWriter(fstream);
-         /*Span classes have info about the videos*/
-         for(Element m:span){
+          for(Element m:span){
             Element f=m.select("div.jsx-179939359.jsx-2715883145.feed-item-content").first();
             if(f==null)
                continue;
@@ -157,6 +157,7 @@ class TikTokCrawling{
          }
          out.close();
          driver.close();
+         /*****************************/
          return "out.txt";
       }
       public static void Create_Database_and_put_info_on_it(String file) throws IOException{
@@ -205,7 +206,7 @@ class TikTokCrawling{
       for (int i = 0; i < threads.length; i++) {
          threads[i] = new Thread(new Runnable() {
             public void run() {
-               for(int i=0;i<200;i++){
+               for(int i=0;i<10;i++){
                   System.out.println(i);
                   jse.executeScript("window.scrollTo(0, document.body.scrollHeight)");
                   try{
