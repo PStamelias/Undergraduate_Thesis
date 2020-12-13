@@ -4,6 +4,8 @@ import org.jsoup.Jsoup;
 import java.io.*; 
 import org.openqa.selenium.JavascriptExecutor;  
 import java.net.URL;
+import java.io.File;    
+import java.io.IOException;    
 import java.sql.SQLException; 
 import java.sql.Statement;
 import java.util.concurrent.TimeUnit;
@@ -56,37 +58,50 @@ class TikTokCrawling{
     public static void main (String[] args) throws IOException{
          String url="https://www.tiktok.com/foryou?lang=en";
          String file=get_info_from_URL(url);
-         //Create_Database_and_put_info_on_it(file);
-
+         Create_Database_and_put_info_on_it(file);
+         File f1=new File("out.txt");
+         f1.delete();
       }
       public static String get_info_from_URL(String url) throws IOException{
          System.setProperty("/home/prokopis/Downloads/chromedriver_linux64", "/usr/bin/google-chrome-stable");
          BufferedWriter out = null;
-         int ID=1;
-         WebDriver driver = new ChromeDriver();/*Opening the driver*/
-         driver.get(url);/*get the specific url*/
-         JavascriptExecutor jse = (JavascriptExecutor)driver;
-         Load_More_classes(jse);
+         Fun2 f2=new Fun2();
+         int ID=0;
          try{
-            Thread.sleep(10000);
+            ID=f2.Coun_records_on_Database();
          }
          catch(Exception e){
             System.err.println(e);
          }
-         //Load_More_classes(jse);                                                                                                                                                                                                                                                                                                                                                                                                 
+         ID+=1;
+         WebDriver driver = new ChromeDriver();/*Opening the driver*/
+         driver.get(url);/*get the specific url*/
+         JavascriptExecutor jse = (JavascriptExecutor)driver;
+         int counter0=0;
+         while(true){
+            Load_More_classes(jse);
+            try{
+               Thread.sleep(10000);
+            }
+            catch(Exception e){
+               System.err.println(e);
+            }
+            counter0=counter0+1;
+            if(counter0==2)
+               break;
+         }  
+         Load_More_classes(jse);                                                                                                                                                                                                                                                                                                                                                                                   
          String html = driver.getPageSource();/*get the html code from site*/
          Document doc = Jsoup.parse(html);/*parse the html code*/
          /*Navigation to info of videos*/
          Elements photos = doc.select("div[id=__next]");
          Elements a = photos.select("div[id=main]");
          Elements b= a.select("div[class=tt-feed]");
-         Elements c=b.select("div.jsx-1115548107.video-feed-container");
-         System.out.println(c.size());
+         Elements c=b.select("div.jsx-1115548107.video-feed-container");   
          Elements span=b.select("span.lazyload-wrapper");
-         System.out.println(span.size());
          FileWriter fstream = new FileWriter("out.txt", true); //true tells to append data.
          out = new BufferedWriter(fstream);
-          for(Element m:span){
+         for(Element m:span){
             Element f=m.select("div.jsx-179939359.jsx-2715883145.feed-item-content").first();
             if(f==null)
                continue;
@@ -156,6 +171,7 @@ class TikTokCrawling{
             out.write("\n");
          }
          out.close();
+         fstream.close();
          driver.close();
          /*****************************/
          return "out.txt";
@@ -206,11 +222,11 @@ class TikTokCrawling{
       for (int i = 0; i < threads.length; i++) {
          threads[i] = new Thread(new Runnable() {
             public void run() {
-               for(int i=0;i<10;i++){
+               for(int i=0;i<50;i++){
                   System.out.println(i);
-                  jse.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+                  jse.executeScript("window.scrollBy(0, 3000)", "");
                   try{
-                     Thread.sleep(1000);
+                     Thread.sleep(1000L);
                   }catch(Exception c){
                      System.err.println(c);
                   }
