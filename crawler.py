@@ -45,6 +45,8 @@ def val_inside(my_string):
         my_list.append("COMMENTS_NUMBER")
     if "SHARES_NUMBER" in my_string:
         my_list.append("SHARES_NUMBER")
+    if "COUNT(*)" in my_string:
+    	my_list.append("COUNT(*)")
     return my_list
 
 
