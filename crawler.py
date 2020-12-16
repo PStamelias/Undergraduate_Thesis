@@ -9,7 +9,7 @@ cursor = con.cursor()
 
 @app.route("/")
 def home():
-    return render_template('index.html')
+    return render_template('Main.html')
 
 @app.route("/login", methods=['POST'])
 def login():
@@ -24,9 +24,9 @@ def login():
             for elem in e:
                 ko.append(elem)
             t.append(ko)
-        return render_template('de.html', val=sql_query, data=t, my_val=column_name_list)
+        return render_template('Result.html', val=sql_query, data=t, my_val=column_name_list)
     else:
-        return render_template('index.html')
+        return render_template('Main.html')
 
 
 def val_inside(my_string):
