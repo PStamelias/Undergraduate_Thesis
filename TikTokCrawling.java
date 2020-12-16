@@ -74,6 +74,7 @@ class TikTokCrawling{
             System.err.println(e);
          }
          ID+=1;
+         System.out.println(ID);
          WebDriver driver = new ChromeDriver();/*Opening the driver*/
          driver.get(url);/*get the specific url*/
          JavascriptExecutor jse = (JavascriptExecutor)driver;
