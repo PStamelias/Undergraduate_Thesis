@@ -7,17 +7,19 @@ app = Flask(__name__, template_folder='template')
 con = psycopg2.connect(database="prokopis", user="prokopis",
                        password="123", host="127.0.0.1", port="5432")
 cursor = con.cursor()
+
 @app.route("/")
 def home():
     return render_template('index.html')
+
 @app.route("/login", methods=['POST'])
 def login():
     if request.method == 'POST':
         sql_query = request.form['query']
-        column_name_list = val_inside(sql_query)
+        column_name_list = val_inside(sql_query)#check which column are on result
         cursor.execute(sql_query)
         searchresults = cursor.fetchall()
-        t = []
+        t = []#creating list of tuples
         for e in searchresults:
             ko = []
             for elem in e:
