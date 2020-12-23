@@ -100,6 +100,7 @@ class TikTokCrawling{
          Elements b= a.select("div[class=tt-feed]");
          Elements c=b.select("div.jsx-1115548107.video-feed-container");   
          Elements span=b.select("span.lazyload-wrapper");
+         System.out.println(span.size());
          FileWriter fstream = new FileWriter("out.txt", true); //true tells to append data.
          out = new BufferedWriter(fstream);
          for(Element m:span){

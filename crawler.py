@@ -61,13 +61,14 @@ def login():
             bar_plot = plt.bar(num,y_list,tick_label=x_list)
             for idx,rect in enumerate(bar_plot):
                 height = rect.get_height()
-                ax.text(rect.get_x() + rect.get_width()/2., 1.05*height,s="",ha='center', va='bottom', rotation=0)
+                ax.text(rect.get_x() + rect.get_width()/2., 1.05*height,s="",ha='center', va='bottom', rotation='vertical')
             ###################
+            plt.xticks(rotation=90)
             #Show Histogram on url            
             path="static/images/image"+str(time.time())+".png"
             for filename in os.listdir('static/images'):
                     os.remove('static/images/' + filename)
-            plt.savefig(path)
+            plt.savefig(path, bbox_inches='tight')
             ######################
             return render_template('hist.html', val=sql_query,url=path)
         elif hist_create == 1 and columns_number !=1 :#Histogram with more than 1 columns count()
@@ -122,11 +123,12 @@ def login():
                 height = rect.get_height()
                 ax.text(rect.get_x() + rect.get_width()/2., 1.05*height,s="",ha='center', va='bottom', rotation=0)
             ###################
+            plt.xticks(rotation=90)
             #Show Histogram on url            
             path="static/images/image"+str(time.time())+".png"
             for filename in os.listdir('static/images'):
                     os.remove('static/images/' + filename)
-            plt.savefig(path)
+            plt.savefig(path,bbox_inches='tight')
             ######################
             return render_template('hist.html', val=sql_query,url=path)
         else:
