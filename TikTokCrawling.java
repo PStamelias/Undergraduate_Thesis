@@ -2,6 +2,8 @@ import java.io.IOException;
 import java.util.logging.*;
 import org.jsoup.Jsoup;
 import java.io.*; 
+import java.time.format.DateTimeFormatter;  
+import java.time.LocalDateTime; 
 import org.openqa.selenium.JavascriptExecutor;  
 import java.net.URL;
 import java.io.File;    
@@ -28,6 +30,7 @@ class Video{
    public String Likes_Number;
    public String Comments_Number;
    public String Shares_Number;
+   public String date;
    Video(){
       
    }
@@ -51,6 +54,9 @@ class Video{
    }
    public  void set_Shares_Number(String Shares){
       this.Shares_Number=Shares;
+   }
+   public void set_Date(String Date){
+      this.date=Date;
    }
 }
 
@@ -100,7 +106,6 @@ class TikTokCrawling{
          Elements b= a.select("div[class=tt-feed]");
          Elements c=b.select("div.jsx-1115548107.video-feed-container");   
          Elements span=b.select("span.lazyload-wrapper");
-         System.out.println(span.size());
          FileWriter fstream = new FileWriter("out.txt", true); //true tells to append data.
          out = new BufferedWriter(fstream);
          for(Element m:span){
@@ -200,11 +205,15 @@ class TikTokCrawling{
                   VideoTable[j].set_Likes_Number(f.Likes_Number(h));
                   VideoTable[j].set_Commend_Number(f.Comments_Number(h));
                   VideoTable[j].set_Shares_Number(f.Shares_Number(h));
+                  DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");  
+                  LocalDateTime now = LocalDateTime.now();  
+                  VideoTable[j].set_Date(dtf.format(now));
                   j+=1;
                }
                Fun2 f2=new Fun2();
                try{
                   f2.PostgreSQL_Database_Creation(VideoTable,coun); 
+                  f2.Creation_of_Second_Database(VideoTable,coun);
                }catch(Exception e){
                   System.out.println("Error on database");
                   return ;
@@ -224,7 +233,7 @@ class TikTokCrawling{
       for (int i = 0; i < threads.length; i++) {
          threads[i] = new Thread(new Runnable() {
             public void run() {
-               for(int i=0;i<50;i++){
+               for(int i=0;i<100;i++){
                   System.out.println(i);
                   jse.executeScript("window.scrollBy(0, 3000)", "");
                   try{
