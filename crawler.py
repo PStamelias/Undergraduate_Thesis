@@ -1,4 +1,5 @@
 from flask import Flask, redirect, url_for, render_template
+from datetime import datetime as dt
 import psycopg2
 import numpy 
 import os
@@ -30,23 +31,59 @@ def login():
             HASHTAG_name=""
             Num_on_specific_date=[]
             graphic=0
+            histogram=0
+            term1=0
+            term2=0
+            term3=0
+            term4=0
             for elem in column_name_list:
                 if elem.find("COUNT") !=-1:
-                    graphic=1
-                    break
+                    term1=1
+                if elem=="HASHTAG":
+                    term2=1
+                if elem=="DATE":
+                    term3=1
+                else:
+                    term4=1
+            if term1==1 and term2==1 and term3==1:
+                graphic=1
+            #if term1==1 and term4==1:
+
             if graphic==1:
+                cursor.execute('SELECT DISTINCT DATE FROM TikTokVideoHashTagInfoTable')
+                date_result = cursor.fetchall()
                 if len(searchresults)==0:
                     return render_template('Main.html')
+                poshashtag=column_name_list.index("HASHTAG")
+                posdate=column_name_list.index("DATE")
                 for k in searchresults:
-                    HASHTAG_name=k[0];
-                    date_list.append(k[1])
+                    HASHTAG_name=k[poshashtag];
+                    date_list.append(k[posdate])
                     Num_on_specific_date.append(k[2])
+                #checking if on specific date  has no value
+                for a in date_result:
+                    date1=a[0]
+                    found=0
+                    pos=0
+                    for k in searchresults:
+                        date2=k[posdate]
+                        val=compare_two_dates(date1,date2)
+                        if val==-1:
+                            break
+                        if val==0:
+                            found=1
+                            break
+                        pos+=1
+                    if found==0:
+                        date_list.insert(pos,date1)
+                        Num_on_specific_date.insert(pos,0)
                 plt.figure(figsize=(9, 3))
                 plt.plot(date_list, Num_on_specific_date)
                 plt.suptitle(HASHTAG_name)
                 path="static/images/image"+str(time.time())+".png"
                 for filename in os.listdir('static/images'):
                         os.remove('static/images/' + filename)
+                plt.xticks(rotation=90)
                 plt.savefig(path, bbox_inches='tight')
                 return render_template('Graphic.html', val=sql_query,url=path)
             else:
@@ -266,6 +303,49 @@ def Table(sql):
         return "TikTokVideoHashTagInfoTable"
     if "TikTokVideoDataTable" in sql:
         return "TikTokVideoDataTable"
+
+
+def pos_on_column_on_query(sql,column):
+    my_string=word_list(sql)
+    coun=0
+    for keyword in my_string:
+        print(keyword)
+        if keyword =="FROM":
+            break
+        if keyword== "HASHTAG":
+            return coun
+        elif keyword== "DATE":
+            return coun
+        elif keyword==" ID":
+            return coun
+        elif keyword=="NAME":
+            return coun
+        coun+=1
+    return -1
+
+
+def compare_two_dates(date1,date2):
+    year1=date1[:4]
+    year2=date2[:4]
+    if year1>year2:
+        return 1
+    elif year1<year2:
+        return -1
+    month1=date1[5:7]
+    month2=date2[5:7]
+    if month1>month2:
+        return 1
+    elif month1<month2:
+        return -1
+    day1=date1[8:10]
+    day2=date2[8:10]
+    if day1>day2:
+        return 1
+    elif day1==day2:
+        return 0
+    else:
+        return -1
+
 
 if __name__ == "__main__":
     app.run()
