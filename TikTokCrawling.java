@@ -100,6 +100,7 @@ class TikTokCrawling{
          Load_More_classes(jse);                                                                                                                                                                                                                                                                                                                                                                                   
          String html = driver.getPageSource();/*get the html code from site*/
          Document doc = Jsoup.parse(html);/*parse the html code*/
+         System.out.println(doc);
          /*Navigation to info of videos*/
          Elements photos = doc.select("div[id=__next]");
          Elements a = photos.select("div[id=main]");

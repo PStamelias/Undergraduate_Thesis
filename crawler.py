@@ -58,8 +58,19 @@ def login():
                     date_list.append(k[posdate])
                     Num_on_specific_date.append(k[2])
                 #checking if on specific date  has no value
+                first=date_list[0]
+                last=date_list[-1]
+                final_date_result=[]
                 for a in date_result:
-                    date1=a[0]
+                    date=a[0]
+                    val1=compare_two_dates(date,first)
+                    val2=compare_two_dates(date,last)
+                    if val1>=0 and val2==-1:
+                        final_date_result.append(date)
+                    elif val1>=0 and val2==0:
+                        final_date_result.append(date)
+                for g in final_date_result:
+                    date1=g
                     found=0
                     pos=0
                     for k in searchresults:
