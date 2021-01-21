@@ -3,6 +3,7 @@ from datetime import datetime as dt
 import psycopg2
 import numpy 
 import os
+import datefinder
 import re
 import time
 from flask import request
@@ -58,11 +59,16 @@ def login():
                     date_list.append(k[posdate])
                     Num_on_specific_date.append(k[2])
                 #checking if on specific date  has no value
-                first=date_list[0]
-                last=date_list[-1]
+                date_list.sort()
+                date_result_list=[]
+                for i in date_result:
+                    date_result_list.append(i[0])
+                date_result_list.sort()
+                first=date_on_sql_query(sql_query,1,date_result_list)
+                last=date_on_sql_query(sql_query,2,date_result_list)
                 final_date_result=[]
-                for a in date_result:
-                    date=a[0]
+                for a in date_result_list:
+                    date=a
                     val1=compare_two_dates(date,first)
                     val2=compare_two_dates(date,last)
                     if val1>=0 and val2==-1:
@@ -463,6 +469,26 @@ def compare_two_dates(date1,date2):
     else:
         return -1
 
+
+def date_on_sql_query(sql,whichone,date_result_list):
+    matches = datefinder.find_dates(sql)
+    matches=list(matches)
+    matches.sort()
+    s=[]
+    for match in matches:
+        x=match.date()
+        x=x.strftime('%Y/%m/%d')
+        s.append(x)
+    if whichone==1: 
+        if ">=" in sql:
+            return s[0]
+        else: 
+            return date_result_list[0]
+    if whichone==2:
+        if "<=" in sql:
+            return s[-1]
+        else:
+            return date_result_list[-1]
 
 if __name__ == "__main__":
     app.run()
