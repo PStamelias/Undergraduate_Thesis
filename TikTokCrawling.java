@@ -7,7 +7,9 @@ import java.time.LocalDateTime;
 import org.openqa.selenium.JavascriptExecutor;  
 import java.net.URL;
 import java.io.File;    
-import java.io.IOException;    
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;    
 import java.sql.SQLException; 
 import java.sql.Statement;
 import java.util.concurrent.TimeUnit;
@@ -63,6 +65,8 @@ class Video{
 class TikTokCrawling{
     public static void main (String[] args) throws IOException{
          String url="https://www.tiktok.com/foryou?lang=en";
+         Fun2 f2=new Fun2();
+         f2.Create_Table_on_Database();
          String file=get_info_from_URL(url);
          Create_Database_and_put_info_on_it(file);
          File f1=new File("out.txt");
@@ -100,7 +104,6 @@ class TikTokCrawling{
          Load_More_classes(jse);                                                                                                                                                                                                                                                                                                                                                                                   
          String html = driver.getPageSource();/*get the html code from site*/
          Document doc = Jsoup.parse(html);/*parse the html code*/
-         System.out.println(doc);
          /*Navigation to info of videos*/
          Elements photos = doc.select("div[id=__next]");
          Elements a = photos.select("div[id=main]");
@@ -215,6 +218,7 @@ class TikTokCrawling{
                try{
                   f2.PostgreSQL_Database_Creation(VideoTable,coun); 
                   f2.Creation_of_Second_Database(VideoTable,coun);
+                  f2.Insert_records_on_Third_Table(VideoTable,coun);
                }catch(Exception e){
                   System.out.println("Error on database");
                   return ;

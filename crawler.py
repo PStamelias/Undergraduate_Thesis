@@ -26,6 +26,14 @@ def login():
         hist_create=0
         cursor.execute(sql_query)
         searchresults = cursor.fetchall()
+        if Table(sql_query)=="TikTokVideoWord":
+            end_list = []#creating list of tuples
+            for e in searchresults:
+                current_list = []
+                for elem in e:
+                    current_list.append(elem)
+                end_list.append(current_list)
+            return render_template('Result.html', val=sql_query, data=end_list, my_val=column_name_list)
         #Graphic representation
         if Table(sql_query)=="TikTokVideoHashTagInfoTable":
             date_list=[]
@@ -344,6 +352,35 @@ def word_list(my_string):
 def val_inside(my_string):
     my_string=word_list(my_string)
     my_list = []
+    if "TikTokVideoWord" in my_string:
+        for keyword in my_string:
+            if "FROM" == keyword:
+                return my_list
+            if "ID" == keyword:
+                my_list.append("ID")
+            if "*" == keyword:
+                my_list.append("ID")
+                my_list.append("NAME")
+                my_list.append("DATE")
+                my_list.append("WORD")
+                return my_list
+            if "COUNT(ID)" == keyword:
+                my_list.append("COUNT(ID)")
+            if "COUNT(NAME)" == keyword:
+                my_list.append("COUNT(NAME)")
+            if "COUNT(DATE)" == keyword:
+                my_list.append("COUNT(DATE)")
+            if "COUNT(WORD)" == keyword:
+                my_list.append("COUNT(WORD)")
+            if "DATE" == keyword:
+                my_list.append("DATE")
+            if "NAME" == keyword:
+                my_list.append("NAME")
+            if "COUNT(*)" == keyword:
+                my_list.append("COUNT(*)")
+            if "WORD"  == keyword:
+                my_list.append("HASHTAG")
+        return my_list
     if "TikTokVideoDataTable" in my_string:
         for keyword in my_string:
             if "FROM" == keyword:

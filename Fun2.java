@@ -11,6 +11,18 @@ public  class Fun2{
     String text= "CREATE TABLE IF NOT EXISTS TikTokVideoHashTagInfoTable " +"(ID INT PRIMARY KEY     NOT NULL," +" NAME           CHAR(50)   NOT NULL, " +" DATE            TEXT     NOT NULL, " +" HASHTAG     TEXT NOT NULL)" ;
     return text;
   }
+  public static void Create_Table_on_Database(){
+      try{
+         Connection c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/prokopis","prokopis","123");
+         Statement stmt1 = c.createStatement();
+         stmt1.executeUpdate("CREATE TABLE IF NOT EXISTS TikTokVideoWord " +"(ID INT PRIMARY KEY     NOT NULL," +" NAME           CHAR(50)   NOT NULL, " +" DATE            TEXT     NOT NULL, " +" WORD     TEXT NOT NULL)");
+         stmt1.close();
+         c.close();
+      }
+      catch(Exception e){
+         System.err.println(e);
+      }
+   }
 	public  String PostgreSQL_Database_Creation(Video[] table,int coun) throws Exception{/*Creating DataBase Function*/
     	Connection c = null;
       try{
@@ -93,6 +105,24 @@ public  class Fun2{
     c.close();
     return num+1;
   }
+  public static int Coun_records_on_Database3() throws Exception{
+    int num=0;
+    Class.forName("org.postgresql.Driver");
+    Connection c=null;
+    c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/prokopis","prokopis","123");
+    String sql=Table_Initialization();
+    Statement stmt = c.createStatement();
+    stmt.executeUpdate(sql);
+    Statement stmt1=c.createStatement();
+    ResultSet rs=stmt1.executeQuery("select * from TikTokVideoWord order by id desc limit 1");
+    while(rs.next()){
+      num = rs.getInt(1);
+    }
+    stmt.close();
+    stmt1.close();
+    c.close();
+    return num+1;
+  }
   public static boolean isNumeric(final String str) {
         // null or empty
         if (str == null || str.length() == 0) {
@@ -151,5 +181,57 @@ public  class Fun2{
         System.err.println(e.getClass().getName()+": "+e.getMessage());
         System.exit(0);
       }
+    }
+    public static void Insert_records_on_Third_Table(Video[] table,int coun) throws Exception{
+      Class.forName("org.postgresql.Driver");
+      Connection c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/prokopis","prokopis","123");
+      int special_num=Coun_records_on_Database3()+1;
+      for(int i=0;i<coun;i++){
+        String Name=table[i].Name;
+        String Date=table[i].date;
+        String Text=table[i].Text;
+        if(Text==null)
+          continue;
+        int done=0;
+        String word="";
+        for(int j=0;j<Text.length();j++){
+          if(Text.charAt(i)=='#'||Character.isDigit(Text.charAt(i))==true){
+            PreparedStatement st = c.prepareStatement("INSERT INTO TikTokVideoWord (ID, NAME, DATE ,WORD) VALUES (?,?,?,?)");
+            if(word.isEmpty()||word==null)
+              continue;
+            st.setInt(1,special_num);
+            st.setString(2,Name);
+            st.setString(3,Date);
+            st.setString(4,word);
+            st.executeUpdate();
+            special_num+=1;
+            st.close();
+            word="";
+            break;
+          }
+          if(Text.charAt(i)==' '){
+                if(done==0)
+                  done=1;
+                else{
+                  if(word!=null){
+                    PreparedStatement st = c.prepareStatement("INSERT INTO TikTokVideoWord (ID, NAME, DATE ,WORD) VALUES (?,?,?,?)");
+                    if(word.isEmpty()||word==null)
+                      continue;
+                    st.setInt(1,special_num);
+                    st.setString(2,Name);
+                    st.setString(3,Date);
+                    st.setString(4,word);
+                    st.executeUpdate();
+                    special_num+=1;
+                    st.close();
+                  }
+                  word="";
+                }
+              }
+          else 
+            word=word+Text.charAt(i);
+        }
+      }
+      c.close();
     }
   }
