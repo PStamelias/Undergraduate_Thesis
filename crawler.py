@@ -28,6 +28,78 @@ def login():
         searchresults = cursor.fetchall()
         if Table(sql_query)=="TikTokVideoWord":
             end_list = []#creating list of tuples
+            graphic=0
+            term1=0
+            term2=0
+            term3=0
+            term4=0
+            for elem in column_name_list:
+                if elem.find("COUNT") !=-1:
+                    term1=1
+                if elem=="WORD":
+                    term2=1
+                if elem=="DATE":
+                    term3=1
+                else:
+                    term4=1
+            if term1==1 and term2==1 and term3==1:
+                graphic=1
+            if graphic==1:
+                WORD_NAME=""
+                Num_on_specific_date=[]
+                date_list=[]
+                cursor.execute('SELECT DISTINCT DATE FROM TikTokVideoWord')
+                date_result = cursor.fetchall()
+                if len(searchresults)==0:
+                    return render_template('Main.html')
+                posword=column_name_list.index("WORD")
+                posdate=column_name_list.index("DATE")
+                for k in searchresults:
+                    WORD_NAME=k[posword];
+                    date_list.append(k[posdate])
+                    Num_on_specific_date.append(k[2])
+                #checking if on specific date  has no value
+                date_list.sort()
+                date_result_list=[]
+                for i in date_result:
+                    date_result_list.append(i[0])
+                date_result_list.sort()
+                first=date_on_sql_query(sql_query,1,date_result_list)
+                last=date_on_sql_query(sql_query,2,date_result_list)
+                final_date_result=[]
+                for a in date_result_list:
+                    date=a
+                    val1=compare_two_dates(date,first)
+                    val2=compare_two_dates(date,last)
+                    if val1>=0 and val2==-1:
+                        final_date_result.append(date)
+                    elif val1>=0 and val2==0:
+                        final_date_result.append(date)
+                for g in final_date_result:
+                    date1=g
+                    found=0
+                    pos=0
+                    for k in searchresults:
+                        date2=k[posdate]
+                        val=compare_two_dates(date1,date2)
+                        if val==-1:
+                            break
+                        if val==0:
+                            found=1
+                            break
+                        pos+=1
+                    if found==0:
+                        date_list.insert(pos,date1)
+                        Num_on_specific_date.insert(pos,0)
+                plt.figure(figsize=(9, 3))
+                plt.plot(date_list, Num_on_specific_date)
+                plt.suptitle(WORD_NAME)
+                path="static/images/image"+str(time.time())+".png"
+                for filename in os.listdir('static/images'):
+                        os.remove('static/images/' + filename)
+                plt.xticks(rotation=90)
+                plt.savefig(path, bbox_inches='tight')
+                return render_template('Graphic.html', val=sql_query,url=path)
             for e in searchresults:
                 current_list = []
                 for elem in e:
@@ -379,7 +451,7 @@ def val_inside(my_string):
             if "COUNT(*)" == keyword:
                 my_list.append("COUNT(*)")
             if "WORD"  == keyword:
-                my_list.append("HASHTAG")
+                my_list.append("WORD")
         return my_list
     if "TikTokVideoDataTable" in my_string:
         for keyword in my_string:
@@ -463,6 +535,8 @@ def Table(sql):
         return "TikTokVideoHashTagInfoTable"
     if "TikTokVideoDataTable" in sql:
         return "TikTokVideoDataTable"
+    if "TikTokVideoWord" in sql:
+        return "TikTokVideoWord"
 
 
 def pos_on_column_on_query(sql,column):
