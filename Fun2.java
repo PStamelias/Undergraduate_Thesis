@@ -15,7 +15,7 @@ public  class Fun2{
       try{
          Connection c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/prokopis","prokopis","123");
          Statement stmt1 = c.createStatement();
-         stmt1.executeUpdate("CREATE TABLE IF NOT EXISTS TikTokVideoWord " +"(ID INT PRIMARY KEY     NOT NULL," +" NAME           CHAR(50)   NOT NULL, " +" DATE            TEXT     NOT NULL, " +" WORD     TEXT NOT NULL)");
+         stmt1.executeUpdate("CREATE TABLE IF NOT EXISTS TikTokVideoWord                                                                                                                                                                               " +"(ID INT PRIMARY KEY     NOT NULL," +" NAME           CHAR(50)   NOT NULL, " +" DATE            TEXT     NOT NULL, " +" WORD     TEXT NOT NULL)");
          stmt1.close();
          c.close();
       }
