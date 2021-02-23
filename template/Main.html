@@ -3,14 +3,66 @@
     <head>
         <title>TikTok Database Page</title>
     </head>
-    <body>
-    	<h1>Database:Prokopis</h1>
-        <h2>TikTokDataInfo</h2>
-        <h3>Welcome</h3>
+    <body style="background-color:powderblue;">
+        <h1>Database:Prokopis</h1>
+        <h2>TikTokData</h2>
+        <h3>TikTokVideoDataTable</h3>
         <form action="/login" method="post" >
-		  <label for="query">SQl query:</label><br>
-		  <input  type="text" id="query" name="query" value="" size="150"><br>
-		  <input type="submit" value="Submit">
-		</form> 
+          <input type='hidden' name='name' value='TikTokVideoDataTable'>
+          <label for="Column(s) Name">Column(s) Name:</label><br>
+          <input  type="text" id="Column(s)_Name" name="Column(s)_Name" value="" size="50"><br>
+          <label for="Where_Condition">Where Condition:</label><br>          
+          <input  type="text" id="Where_Condition" name="Where_Condition" value="" size="50"><br>
+          <label for="Where_Condition">Having Condition:</label><br>          
+          <input  type="text" id="Having_Condition" name="Having_Condition" value="" size="50"><br>
+          <label for="query">Limit:</label><br>
+          <input  type="text" id="LIMIT" name="LIMIT" value="" size="50"><br><br>
+          <label for="Histogram">Histogram</label>
+          <input type="checkbox" id="Histogram" name="Histogram"  value="Histogram" ><br><br>
+          <label for="Orderby">Order by</label><br>
+          <label for="Orderby">DESC</label>
+          <input type="checkbox" id="Orderby" name="DESC"    value="Orderby" ><br>
+          <label for="Orderby">ASC</label>
+          <input type="checkbox" id="Orderby" name="ASC"  value="Orderby" ><br>
+          <label for="Orderby">NONE</label>
+          <input type="checkbox" id="Orderby" name="NONE"   value="Orderby" checked><br><br>
+          <input type="submit" value="Submit">
+        </form>
+        <br>
+        <br> 
+        <hr> 
+        <h3>TikTokVideoHashtagInfoTable</h3>
+        <form action="/login" method="post" >
+          <label for="Creator">Creator Name:</label><br>
+          <input  type="text" id="Creator" name="Creator" value="" size="50"><br>
+          <input type='hidden' name='name' value='TikTokVideoHashTagInfoTable'>
+          <label for="HashTag">HashTag:</label><br>
+          <input  type="text" id="HashTag" name="HashTag" value="" size="50"><br>
+          <label for="Start_Date">Start Date:</label><br>          
+          <input  type="text" id="Start_Date" name="Start_Date" value="" size="50"><br>
+          <label for="End_Date">End Date:</label><br>
+          <input  type="text" id="End_Date" name="End_Date" value="" size="50"><br>
+          <input name="Graphic Represantation" type="checkbox"  checked value="1" onclick="return false" />
+          <label for="vehicle3">Graphic Represantation</label><br>
+          <br><input type="submit" value="Submit">
+        </form>   
+        <br> 
+        <br> 
+        <hr> 
+        <h3>TikTokVideoWord</h3>
+        <form action="/login" method="post" >
+          <label for="Creator">Creator Name:</label><br>
+          <input  type="text" id="Creator" name="Creator" value="" size="50"><br>
+          <input type='hidden' name='name' value='TikTokVideoWord'>
+          <label for="Word">Word:</label><br>
+          <input  type="text" id="Word" name="Word" value="" size="50"><br>
+          <label for="Start_Date">Start Date:</label><br>          
+          <input  type="text" id="Start_Date" name="Start_Date" value="" size="50"><br>
+          <label for="End_Date">End Date:</label><br>
+          <input  type="text" id="End_Date" name="End_Date" value="" size="50"><br>
+          <input name="Graphic Represantation" type="checkbox"  checked value="1" onclick="return false" />
+          <label for="vehicle3">Graphic Represantation</label><br>
+          <br><input type="submit" value="Submit">
+        </form>   
     </body>
 </html>
