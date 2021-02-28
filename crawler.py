@@ -545,15 +545,6 @@ def val_inside(my_string):
 
 
 
-#Function that returns the name of given table of sql
-def Table(sql):
-    if "TikTokVideoHashTagInfoTable" in sql:
-        return "TikTokVideoHashTagInfoTable"
-    if "TikTokVideoDataTable" in sql:
-        return "TikTokVideoDataTable"
-    if "TikTokVideoWord" in sql:
-        return "TikTokVideoWord"
-
 
 
 #Function that checks dates 
