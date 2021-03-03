@@ -74,6 +74,7 @@ def Table1():
             coun=0
             columns_number=0
             count_position=0
+            hist_create=0
             column_name_list = val_inside(sql)
             for elem in column_name_list:
                 #check if i have count to show histogram as result on html page 
@@ -112,6 +113,8 @@ def Table1():
             if Limit:
                 sql=sql + " LIMIT "+ Limit
             ##############################################
+            print(sql)
+            print(hist_create)
             cursor.execute(sql)
             searchresults = cursor.fetchall()
             if hist_create == 1 and columns_number == 1:
@@ -157,7 +160,7 @@ def Table1():
                         list10.append(elem)
                     t.append(list10)
                 if not t:
-                    return render_template('Result.html', val=sql_query, data=t, my_val=column_name_list)
+                    return render_template('Result.html', val=sql, data=t, my_val=column_name_list)
                 y_list=[]
                 for q in t:
                     y_list.append(q[count_position])
@@ -223,21 +226,26 @@ def Table1():
                 sql = sql[:-1]
                 Having_Condition=Having_Conditions_found(Having_Condition)
                 sql=sql+Having_Condition
+            str1=""
             if enter1==0:
                 for text in column_name_list:
+                    str1=text
                     if "COUNT" in text:
                         sql=sql+" GROUP BY "
                         for col in column_name_list:
                             if "COUNT" in col:
+                                str1=col
                                 continue
                             sql=sql+ col+","
                         sql = sql[:-1]
+            print("str1="+str1)
             if DESC:
-                sql=sql +" ORDER BY COUNT(*) DESC "
+                sql=sql +" ORDER BY " + str1+ " DESC "
             if ASC:
-                sql=sql +" ORDER BY COUNT(*) ASC "
+                sql=sql +" ORDER BY " +str1 +" ASC "
             if Limit:
                 sql=sql + " LIMIT "+ Limit
+            print(sql)
             cursor.execute(sql)
             searchresults = cursor.fetchall()
             list1 = []#creating list of tuples
