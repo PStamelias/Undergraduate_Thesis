@@ -113,8 +113,6 @@ def Table1():
             if Limit:
                 sql=sql + " LIMIT "+ Limit
             ##############################################
-            print(sql)
-            print(hist_create)
             cursor.execute(sql)
             searchresults = cursor.fetchall()
             if hist_create == 1 and columns_number == 1:
@@ -213,7 +211,6 @@ def Table1():
                 ######################
                 return render_template('hist.html', val=sql,url=path)
         else:
-            print("mpainw edw re ")
             column_name_list = val_inside(sql)
             enter1=0
             if Having_Condition:
@@ -238,14 +235,12 @@ def Table1():
                                 continue
                             sql=sql+ col+","
                         sql = sql[:-1]
-            print("str1="+str1)
             if DESC:
                 sql=sql +" ORDER BY " + str1+ " DESC "
             if ASC:
                 sql=sql +" ORDER BY " +str1 +" ASC "
             if Limit:
                 sql=sql + " LIMIT "+ Limit
-            print(sql)
             cursor.execute(sql)
             searchresults = cursor.fetchall()
             list1 = []#creating list of tuples
