@@ -1,5 +1,4 @@
 import java.io.*;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.StringField;
@@ -16,8 +15,11 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
+import org.apache.lucene.store.FSDirectory;
+
+
 class Apach{
-   public static void main (String[] args) throws IOException{
-    	
-   }
+	public static void main (String[] args) throws IOException{
+		
+	}
 }

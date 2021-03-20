@@ -73,8 +73,8 @@ class TikTokCrawling{
          f1.delete();
       }
       public static String get_info_from_URL(String url) throws IOException{
-         //System.setProperty("/home/prokopis/Downloads/chromedriver_linux64", "/usr/bin/google-chrome-stable");
-         System.setProperty("webdriver.gecko.driver","/home/prokopis/Downloads/geckodriver-v0.29.0-linux64/geckodriver");
+         System.setProperty("/home/prokopis/Downloads/chromedriver_linux64", "/usr/bin/google-chrome-stable");
+         //System.setProperty("webdriver.gecko.driver","/home/prokopis/Downloads/geckodriver-v0.29.0-linux64/geckodriver");
          BufferedWriter out = null;
          Fun2 f2=new Fun2();
          int ID=0;
@@ -86,8 +86,8 @@ class TikTokCrawling{
          }
          ID+=1;
          System.out.println(ID);
-         //WebDriver driver = new ChromeDriver();/*Opening the driver*/
-         WebDriver driver = new FirefoxDriver();
+         WebDriver driver = new ChromeDriver();/*Opening the driver*/
+         //WebDriver driver = new FirefoxDriver();
          driver.get(url);/*get the specific url*/
          JavascriptExecutor jse = (JavascriptExecutor)driver;
          int counter0=0;
