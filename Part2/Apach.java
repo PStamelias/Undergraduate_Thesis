@@ -55,7 +55,7 @@ class Apach{
 	      Sound_Tag=rs.getString(4);
 	      date=rs.getString(8);
 	      String y=String.valueOf(num);  
-	      doc.add(new StringField("num",y, Field.Store.YES));
+	      doc.add(new StringField("id",y, Field.Store.YES));
           doc.add(new StringField("name", name, Field.Store.YES));
           doc.add(new TextField("Sound_Tag", Sound_Tag, Field.Store.YES));
           doc.add(new StringField("date", date, Field.Store.YES));
