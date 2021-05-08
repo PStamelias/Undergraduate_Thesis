@@ -36,22 +36,22 @@ class Search{
             int hits=0;
             int i=Integer.parseInt(search_arg);
             TopDocs foundDocs2 = searchById(i, searcher);
-            System.out.println("Total Results :: " + foundDocs2.totalHits);
+            System.out.println(foundDocs2.totalHits);
         }
         else if(type_search.equals("name")){
             int hits=0;
             TopDocs foundDocs2 = searchByName(search_arg, searcher);
-            System.out.println("Total Results :: " + foundDocs2.totalHits);
+            System.out.println(foundDocs2.totalHits);
         }
         else if(type_search.equals("Sound_Tag")){
             int hits=0;
             TopDocs foundDocs2 = searchBySoundTag(search_arg, searcher);
-            System.out.println("Total Results :: " + foundDocs2.totalHits);
+            System.out.println(foundDocs2.totalHits);
         }
         else if(type_search.equals("date")){
             int hits=0;
             TopDocs foundDocs2 = searchBydate(search_arg, searcher);
-            System.out.println("Total Results :: " + foundDocs2.totalHits);
+            System.out.println(foundDocs2.totalHits);
         }
     }
 
@@ -65,7 +65,6 @@ class Search{
 
 	private static TopDocs searchByName(String Name, IndexSearcher searcher) throws Exception
     {
-        System.out.println("mpika edw");
         QueryParser qp = new QueryParser("name",new StandardAnalyzer());
         Query NameQuery = qp.parse(Name);
         TopDocs hits = searcher.search(NameQuery, 100);
