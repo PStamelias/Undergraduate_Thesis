@@ -5,6 +5,7 @@ import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
 import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.search.MultiTermQuery;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.TokenStream;
@@ -43,18 +44,7 @@ class Search{
             TopDocs foundDocs2 = searchByName(search_arg, searcher);
             System.out.println(foundDocs2.totalHits);
         }
-        else if(type_search.equals("Sound_Tag")){
-            int hits=0;
-            TopDocs foundDocs2 = searchBySoundTag(search_arg, searcher);
-            System.out.println(foundDocs2.totalHits);
-        }
-        else if(type_search.equals("date")){
-            int hits=0;
-            TopDocs foundDocs2 = searchBydate(search_arg, searcher);
-            System.out.println(foundDocs2.totalHits);
-        }
     }
-
     private static IndexSearcher createSearcher() throws Exception{	
 		String INDEX_DIR="/home/prokopis/Desktop/Undergraduate_Thesis/Part2/Back-End/index";
     	Directory dir = FSDirectory.open(Paths.get(INDEX_DIR));
@@ -79,19 +69,4 @@ class Search{
         return hits;
     }
 
- 	private static TopDocs searchBySoundTag(String Sound_Tag, IndexSearcher searcher) throws Exception
-    {
-        QueryParser qp = new QueryParser("Sound_Tag", new StandardAnalyzer());
-        Query Sound_TagQuery = qp.parse(Sound_Tag);
-        TopDocs hits = searcher.search(Sound_TagQuery, 10);
-        return hits;
-    }
-
-    private static TopDocs searchBydate(String Date, IndexSearcher searcher) throws Exception
-    {
-        QueryParser qp = new QueryParser("Date", new StandardAnalyzer());
-        Query DateQuery = qp.parse(Date);
-        TopDocs hits = searcher.search(DateQuery, 10);
-        return hits;
-    }
 }

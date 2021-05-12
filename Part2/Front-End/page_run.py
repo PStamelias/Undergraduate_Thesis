@@ -39,12 +39,6 @@ def login():
         elif value_name==['edit']:
             result=execute_java('Search.java','name',Query)
             return render_template('result.html', val1="Name",val2=Query,val3=result)
-        elif value_SoundTag==['edit']:
-            result=execute_java('Search.java','Sound_Tag',Query)
-            return render_template('result.html', val1="Sound_Tag",val2=Query,val3=result)
-        elif value_Date==['edit']:
-            result=execute_java('Search.java','date',Query)
-            return render_template('result.html', val1="Date",val2=Query,val3=result)
         else:
             return render_template('Main_Page.html')
     else:

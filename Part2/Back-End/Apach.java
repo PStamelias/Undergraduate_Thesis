@@ -57,9 +57,6 @@ class Apach{
 	      String y=String.valueOf(num);  
 	      doc.add(new StringField("id",y, Field.Store.YES));
           doc.add(new TextField("name", name, Field.Store.YES));
-          System.out.println(name);
-          doc.add(new TextField("Sound_Tag", Sound_Tag, Field.Store.YES));
-          doc.add(new TextField("date", date, Field.Store.YES));
           writer.addDocument(doc);
 	    }
 	    writer.close();
