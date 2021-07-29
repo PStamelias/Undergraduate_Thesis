@@ -34,15 +34,44 @@ class Search{
         String search_arg=args[1];
         IndexSearcher searcher = createSearcher();
         if(type_search.equals("id")){
-            int hits=0;
-            int i=Integer.parseInt(search_arg);
-            TopDocs foundDocs2 = searchById(i, searcher);
-            System.out.println(foundDocs2.totalHits);
+            QueryParser qp = new QueryParser("id", new StandardAnalyzer());
+            Query idQuery = qp.parse(search_arg);
+            TopDocs hits = searcher.search(idQuery, 10);
+            ScoreDoc[] some1 = hits.scoreDocs;
+            String return_value=" ";
+            for (int e = 0; e < some1.length; e++) {
+                int docId = some1[e].doc;
+                Document d = searcher.doc(docId);
+                return_value=return_value+d.get("id")+" "+ d.get("name")+ " " + d.get("text") + "----";
+            }
+            System.out.println(return_value);
         }
         else if(type_search.equals("name")){
-            int hits=0;
-            TopDocs foundDocs2 = searchByName(search_arg, searcher);
-            System.out.println(foundDocs2.totalHits);
+            QueryParser qp = new QueryParser("name", new StandardAnalyzer());
+            Query idQuery = qp.parse(search_arg);
+            TopDocs hits = searcher.search(idQuery, 10);
+            ScoreDoc[] some1 = hits.scoreDocs;
+            String return_value="";
+            for (int e = 0; e < some1.length; e++) {
+                int docId = some1[e].doc;
+                Document d = searcher.doc(docId);
+                return_value=return_value+d.get("id")+" "+ d.get("name")+ " " + d.get("text") + "----";
+            }
+            return_value = return_value.substring(0, return_value.length() - 1);
+            System.out.println(return_value);
+        }
+        else if(type_search.equals("text")){
+            QueryParser qp = new QueryParser("text", new StandardAnalyzer());
+            Query idQuery = qp.parse(search_arg);
+            TopDocs hits = searcher.search(idQuery, 10);
+            ScoreDoc[] some1 = hits.scoreDocs;
+            String return_value="";
+            for (int e = 0; e < some1.length; e++) {
+                int docId = some1[e].doc;
+                Document d = searcher.doc(docId);
+                return_value=return_value+d.get("id")+" "+ d.get("name")+ " " + d.get("text") + "----";
+            }
+            System.out.println(return_value);
         }
     }
     private static IndexSearcher createSearcher() throws Exception{	
@@ -52,21 +81,5 @@ class Search{
     	IndexSearcher searcher = new IndexSearcher(reader);
     	return searcher;
 	}
-
-	private static TopDocs searchByName(String Name, IndexSearcher searcher) throws Exception
-    {
-        QueryParser qp = new QueryParser("name",new StandardAnalyzer());
-        Query NameQuery = qp.parse(Name);
-        TopDocs hits = searcher.search(NameQuery, 100);
-        return hits;
-    }
- 
-    private static TopDocs searchById(Integer id, IndexSearcher searcher) throws Exception
-    {
-        QueryParser qp = new QueryParser("id", new StandardAnalyzer());
-        Query idQuery = qp.parse(id.toString());
-        TopDocs hits = searcher.search(idQuery, 10);
-        return hits;
-    }
 
 }

@@ -38,6 +38,7 @@ class Apach{
 		int num;
 		String name;
 	    String Sound_Tag;
+	    String text;
 	    String date;
 		try{
 			Class.forName("org.postgresql.Driver");
@@ -52,11 +53,13 @@ class Apach{
 	      Document doc = new Document();
 	      num = rs.getInt(1);
 	      name= rs.getString(2);
+	      text = rs.getString(3);
 	      Sound_Tag=rs.getString(4);
 	      date=rs.getString(8);
 	      String y=String.valueOf(num);  
 	      doc.add(new StringField("id",y, Field.Store.YES));
           doc.add(new TextField("name", name, Field.Store.YES));
+          doc.add(new TextField("text",text,Field.Store.YES));
           writer.addDocument(doc);
 	    }
 	    writer.close();

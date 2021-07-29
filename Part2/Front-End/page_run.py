@@ -30,15 +30,20 @@ def login():
         result=""
         value_id = request.form.getlist('ID')
         value_name = request.form.getlist('Name')
-        value_SoundTag = request.form.getlist('Sound_Tag')
-        value_Date = request.form.getlist('Date')
+        value_text = request.form.getlist('Text')
         Query=request.form['Query']
         if value_id==['edit']:
             result=execute_java('Search.java','id',Query)
+            print(result)
             return render_template('result.html', val1="ID",val2=Query,val3=result)
         elif value_name==['edit']:
             result=execute_java('Search.java','name',Query)
+            print(result)
             return render_template('result.html', val1="Name",val2=Query,val3=result)
+        elif value_text==['edit']:
+            result=execute_java('Search.java','text',Query)
+            print(result)
+            return render_template('result.html', val1="Text",val2=Query,val3=result)
         else:
             return render_template('Main_Page.html')
     else:
