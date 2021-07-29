@@ -44,6 +44,7 @@ class Search{
                 Document d = searcher.doc(docId);
                 return_value=return_value+d.get("id")+" "+ d.get("name")+ " " + d.get("text") + "----";
             }
+            return_value = return_value.substring(0, return_value.length() - 4);
             System.out.println(return_value);
         }
         else if(type_search.equals("name")){
@@ -57,7 +58,7 @@ class Search{
                 Document d = searcher.doc(docId);
                 return_value=return_value+d.get("id")+" "+ d.get("name")+ " " + d.get("text") + "----";
             }
-            return_value = return_value.substring(0, return_value.length() - 1);
+            return_value = return_value.substring(0, return_value.length() - 4);
             System.out.println(return_value);
         }
         else if(type_search.equals("text")){
@@ -71,6 +72,7 @@ class Search{
                 Document d = searcher.doc(docId);
                 return_value=return_value+d.get("id")+" "+ d.get("name")+ " " + d.get("text") + "----";
             }
+            return_value = return_value.substring(0, return_value.length() - 4);
             System.out.println(return_value);
         }
     }
