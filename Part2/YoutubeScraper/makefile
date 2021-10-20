@@ -1,8 +1,8 @@
 run: 
-	java YoutubeScraper
+	java  -cp .:jsoup-1.13.1.jar:postgresql-42.2.18.jar:selenium-server-standalone-3.141.59.jar YoutubeScraper
 
 compile:
-	javac YoutubeScraper.java
+	javac -cp  .:jsoup-1.13.1.jar:postgresql-42.2.18.jar:selenium-server-standalone-3.141.59.jar YoutubeScraper.java
 
 clean:
 	rm -r YoutubeScraper.class 
