@@ -76,24 +76,14 @@ class YoutubeScraper{
         for(String k:Views_list){
             views_coun+=1;
         }
-        System.out.println(coun);
         int lastnumofile=CheckFolder();
-        System.out.println(Name_list.size());
-        System.out.println(Creator_list.size());
-        System.out.println(Description_list.size());
-        System.out.println(Views_list.size());
-        System.out.println(DateCreation_list.size());
-        System.out.println("--------------------------------------------");
-        System.out.println(lastnumofile);
         try{
             FileWriter myWriter = new FileWriter("/home/prokopis/Desktop/Undergraduate_Thesis/Part2/Data/out"+lastnumofile+".txt");
             for(int i=0;i<coun;i++){
 
                 myWriter.write(Name_list.get(i)+"|");
                 myWriter.write(Creator_list.get(i)+"|");
-                System.out.println("kala2");
                 myWriter.write(Description_list.get(i)+"|");
-                System.out.println("kala1");
                 if(i>=views_coun-1){
                     myWriter.write(" | ");
                     myWriter.write("\n");
@@ -101,17 +91,15 @@ class YoutubeScraper{
                 }
                 myWriter.write(Views_list.get(i)+"|");
                 myWriter.write(DateCreation_list.get(i)+"\n");
-                System.out.println(i);
+                
             }
             myWriter.close();
         }
         catch(Exception e){
             System.err.println(e);
         }
-        System.out.println("kala="+kala);
-    
         /**/
-        //driver.close();
+        driver.close();
     }
     public static void create_table(){
         try{
@@ -133,7 +121,6 @@ class YoutubeScraper{
         for (File file : listOfFiles) {
             int num=0;
             if (file.isFile()) {
-                System.out.println(file.getName());
                 String e=file.getName();
                 for(int i=0;i<e.length();i++){
                     if(e.charAt(i)>='0'&&e.charAt(i)<='9'){
@@ -146,7 +133,6 @@ class YoutubeScraper{
         }
         if(coun==-1)
             coun=0;
-        System.out.println(coun);
         return coun;
     }
 }
