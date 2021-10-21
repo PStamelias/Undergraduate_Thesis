@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html>
 <style>
+body {
+  background-color: coral;
+}
 </style>
 <body>
 <h1>LUCENE SEARCH </h1>
 <h2>{{ val1 }} : {{ val2 }}</h2>
-<h3> {{ val3 }}</h3>
+<h2>ID-NAME-TEXT</h2>
+<h3>
+	{% for result in val3 %} 
+	{{ result}}
+	<br/>
+	{% endfor %} 
+</h3>
 </body>
 </html>

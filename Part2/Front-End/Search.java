@@ -38,14 +38,18 @@ class Search{
             Query idQuery = qp.parse(search_arg);
             TopDocs hits = searcher.search(idQuery, 10);
             ScoreDoc[] some1 = hits.scoreDocs;
-            String return_value=" ";
+            String return_value="";
             for (int e = 0; e < some1.length; e++) {
                 int docId = some1[e].doc;
                 Document d = searcher.doc(docId);
-                return_value=return_value+d.get("id")+" "+ d.get("name")+ " " + d.get("text") + "----";
+                return_value=return_value+d.get("id")+" "+ d.get("name")+ " " + d.get("text") + "--";
             }
-            return_value = return_value.substring(0, return_value.length() - 4);
-            System.out.println(return_value);
+            if(return_value=="")
+                System.out.println(return_value);
+            else{
+                return_value = return_value.substring(0, return_value.length() - 4);
+                System.out.println(return_value);
+            }
         }
         else if(type_search.equals("name")){
             QueryParser qp = new QueryParser("name", new StandardAnalyzer());
@@ -56,10 +60,14 @@ class Search{
             for (int e = 0; e < some1.length; e++) {
                 int docId = some1[e].doc;
                 Document d = searcher.doc(docId);
-                return_value=return_value+d.get("id")+" "+ d.get("name")+ " " + d.get("text") + "----";
+                return_value=return_value+d.get("id")+" "+ d.get("name")+ " " + d.get("text") + "--";
             }
-            return_value = return_value.substring(0, return_value.length() - 4);
-            System.out.println(return_value);
+            if(return_value=="")
+                System.out.println(return_value);
+            else{
+                return_value = return_value.substring(0, return_value.length() - 4);
+                System.out.println(return_value);
+            }
         }
         else if(type_search.equals("text")){
             QueryParser qp = new QueryParser("text", new StandardAnalyzer());
@@ -70,10 +78,14 @@ class Search{
             for (int e = 0; e < some1.length; e++) {
                 int docId = some1[e].doc;
                 Document d = searcher.doc(docId);
-                return_value=return_value+d.get("id")+" "+ d.get("name")+ " " + d.get("text") + "----";
+                return_value=return_value+d.get("id")+" "+ d.get("name")+ " " + d.get("text") + "--";
             }
-            return_value = return_value.substring(0, return_value.length() - 4);
-            System.out.println(return_value);
+            if(return_value=="")
+                System.out.println(return_value);
+            else{
+                return_value = return_value.substring(0, return_value.length() - 4);
+                System.out.println(return_value);
+            }
         }
     }
     private static IndexSearcher createSearcher() throws Exception{	
