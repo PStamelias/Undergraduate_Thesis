@@ -17,6 +17,7 @@ import java.nio.file.Paths;
 import java.lang.Object;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
@@ -30,70 +31,44 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 class Search{
     public static void main(String[] args) throws Exception{
-        String type_search=args[0];
-        String search_arg=args[1];
-        IndexSearcher searcher = createSearcher();
-        if(type_search.equals("id")){
-            QueryParser qp = new QueryParser("id", new StandardAnalyzer());
-            Query idQuery = qp.parse(search_arg);
-            TopDocs hits = searcher.search(idQuery, 10);
-            ScoreDoc[] some1 = hits.scoreDocs;
-            String return_value="";
-            for (int e = 0; e < some1.length; e++) {
-                int docId = some1[e].doc;
-                Document d = searcher.doc(docId);
-                return_value=return_value+d.get("id")+" "+ d.get("name")+ " " + d.get("text") + "--";
-            }
-            if(return_value=="")
-                System.out.println(return_value);
-            else{
-                return_value = return_value.substring(0, return_value.length() - 4);
-                System.out.println(return_value);
-            }
+        String search_arg=args[0];
+        String return_value="";
+        IndexSearcher searcherYoutube = createSearcherYoutube();
+        IndexSearcher searcherTikTok  = createSearcherTikTok();
+        Analyzer analyzerYoutube = new StandardAnalyzer();
+        Analyzer analyzerTikTok = new StandardAnalyzer();
+        MultiFieldQueryParser queryParserTikTok = new MultiFieldQueryParser(new String[]{"id", "name","text"},analyzerTikTok);
+        MultiFieldQueryParser queryParserYoutube = new MultiFieldQueryParser(new String[]{"id", "name","creator","description","views","dateCreation"},analyzerYoutube);
+        Query q = queryParserYoutube.parse(search_arg);
+        TopDocs hits = searcherYoutube.search(q, 200);
+        ScoreDoc[] some1 = hits.scoreDocs;
+        for (int e = 0; e < some1.length; e++) {
+            int docId = some1[e].doc;
+            Document d = searcherYoutube.doc(docId);
+            return_value=return_value+d.get("id")+" "+ d.get("name")+ " " + d.get("creator")+ " "+d.get("description")+ " "+d.get("views")+ " "+d.get("dateCreation")+" "+d.get("Source")+"\n"+"~~";
         }
-        else if(type_search.equals("name")){
-            QueryParser qp = new QueryParser("name", new StandardAnalyzer());
-            Query idQuery = qp.parse(search_arg);
-            TopDocs hits = searcher.search(idQuery, 10);
-            ScoreDoc[] some1 = hits.scoreDocs;
-            String return_value="";
-            for (int e = 0; e < some1.length; e++) {
-                int docId = some1[e].doc;
-                Document d = searcher.doc(docId);
-                return_value=return_value+d.get("id")+" "+ d.get("name")+ " " + d.get("text") + "--";
-            }
-            if(return_value=="")
-                System.out.println(return_value);
-            else{
-                return_value = return_value.substring(0, return_value.length() - 4);
-                System.out.println(return_value);
-            }
+        Query q2 = queryParserTikTok.parse(search_arg);
+        TopDocs hits2 = searcherTikTok.search(q2, 200);
+        ScoreDoc[] some2 = hits2.scoreDocs;
+        for (int e = 0; e < some2.length; e++) {
+            int docId = some2[e].doc;
+            Document d = searcherTikTok.doc(docId);
+            return_value=return_value+d.get("id")+" "+ d.get("name")+ " " + d.get("text")+" "+d.get("Source")+"\n"+"~~";
         }
-        else if(type_search.equals("text")){
-            QueryParser qp = new QueryParser("text", new StandardAnalyzer());
-            Query idQuery = qp.parse(search_arg);
-            TopDocs hits = searcher.search(idQuery, 10);
-            ScoreDoc[] some1 = hits.scoreDocs;
-            String return_value="";
-            for (int e = 0; e < some1.length; e++) {
-                int docId = some1[e].doc;
-                Document d = searcher.doc(docId);
-                return_value=return_value+d.get("id")+" "+ d.get("name")+ " " + d.get("text") + "--";
-            }
-            if(return_value=="")
-                System.out.println(return_value);
-            else{
-                return_value = return_value.substring(0, return_value.length() - 4);
-                System.out.println(return_value);
-            }
-        }
+        System.out.println(return_value);
     }
-    private static IndexSearcher createSearcher() throws Exception{	
+    private static IndexSearcher createSearcherTikTok() throws Exception{	
 		String INDEX_DIR="/home/prokopis/Desktop/Undergraduate_Thesis/Part2/Back-End/index";
     	Directory dir = FSDirectory.open(Paths.get(INDEX_DIR));
     	IndexReader reader = DirectoryReader.open(dir);
     	IndexSearcher searcher = new IndexSearcher(reader);
     	return searcher;
 	}
-
+    private static IndexSearcher createSearcherYoutube() throws Exception{   
+        String INDEX_DIR="/home/prokopis/Desktop/Undergraduate_Thesis/Part2/Back-End-Youtube/index";
+        Directory dir = FSDirectory.open(Paths.get(INDEX_DIR));
+        IndexReader reader = DirectoryReader.open(dir);
+        IndexSearcher searcher = new IndexSearcher(reader);
+        return searcher;
+    }
 }

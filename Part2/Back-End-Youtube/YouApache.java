@@ -24,8 +24,7 @@ import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
-
-class Apach{
+class YouApache{
 	public static void main (String[] args) throws Exception{
 		IndexWriter writer=writer_creation();
 	}
@@ -35,11 +34,12 @@ class Apach{
 	    IndexWriterConfig config = new IndexWriterConfig(new StandardAnalyzer());
 	    IndexWriter writer = new IndexWriter(dir, config);
 		Connection c=null;
-		int num;
+		int id;
 		String name;
-	    String Sound_Tag;
-	    String text;
-	    String date;
+	    String creator;
+	    String description;
+	    String views;
+	    String dateCreation;
 		try{
 			Class.forName("org.postgresql.Driver");
 		    c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/prokopis","prokopis","123");
@@ -48,21 +48,24 @@ class Apach{
 			System.out.println(e);
 		}
 		Statement stmt1=c.createStatement();
-	    ResultSet rs=stmt1.executeQuery("select * from TikTokVideoDataTable ");
+	    ResultSet rs=stmt1.executeQuery("select * from Youtube ");
 	    while(rs.next()){
-	      Document doc = new Document();
-	      num = rs.getInt(1);
-	      name= rs.getString(2);
-	      text = rs.getString(3);
-	      Sound_Tag=rs.getString(4);
-	      date=rs.getString(8);
-	      String y=String.valueOf(num);  
-	      doc.add(new StringField("id",y, Field.Store.YES));
-          doc.add(new TextField("name", name, Field.Store.YES));
-          doc.add(new TextField("text",text,Field.Store.YES));
-          doc.add(new TextField("sound_Tag",Sound_Tag,Field.Store.YES));
-          doc.add(new TextField("Source","TikTok",Field.Store.YES));
-          writer.addDocument(doc);
+	    	Document doc = new Document();
+	      	id = rs.getInt(1);
+	      	name= rs.getString(2);
+	      	creator = rs.getString(3);
+	      	description=rs.getString(4);
+	      	views=rs.getString(5);
+	      	dateCreation=rs.getString(6);
+	      	String s=String.valueOf(id);    
+	      	doc.add(new StringField("id",s, Field.Store.YES));
+          	doc.add(new TextField("name", name, Field.Store.YES));
+          	doc.add(new TextField("creator",creator,Field.Store.YES));
+          	doc.add(new TextField("description",description,Field.Store.YES));
+          	doc.add(new TextField("views",views,Field.Store.YES));
+          	doc.add(new TextField("dateCreation",dateCreation,Field.Store.YES));
+          	doc.add(new TextField("Source","Youtube",Field.Store.YES));
+          	writer.addDocument(doc);
 	    }
 	    writer.close();
 	    stmt1.close();

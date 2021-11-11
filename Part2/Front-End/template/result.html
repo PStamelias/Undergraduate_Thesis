@@ -2,18 +2,14 @@
 <html>
 <style>
 body {
-  background-color: coral;
+  background-color: DarkSeaGreen;
 }
 </style>
 <body>
-<h1>LUCENE SEARCH </h1>
-<h2>{{ val1 }} : {{ val2 }}</h2>
-<h2>ID-NAME-TEXT</h2>
-<h3>
-	{% for result in val3 %} 
-	{{ result}}
-	<br/>
-	{% endfor %} 
-</h3>
+<h1>LUCENE</h1>
+<h2>{{Search_value}}</h2>
+{%for element in list%}
+  <p>{{element}}</p>
+{% endfor %}
 </body>
 </html>
