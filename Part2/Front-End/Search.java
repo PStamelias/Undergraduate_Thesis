@@ -32,6 +32,7 @@ import java.sql.Statement;
 class Search{
     public static void main(String[] args) throws Exception{
         String search_arg=args[0];
+        int max_val = Integer.MAX_VALUE;
         String return_value="";
         IndexSearcher searcherYoutube = createSearcherYoutube();
         IndexSearcher searcherTikTok  = createSearcherTikTok();
@@ -40,7 +41,7 @@ class Search{
         MultiFieldQueryParser queryParserTikTok = new MultiFieldQueryParser(new String[]{"id", "name","text"},analyzerTikTok);
         MultiFieldQueryParser queryParserYoutube = new MultiFieldQueryParser(new String[]{"id", "name","creator","description","views","dateCreation"},analyzerYoutube);
         Query q = queryParserYoutube.parse(search_arg);
-        TopDocs hits = searcherYoutube.search(q, 200);
+        TopDocs hits = searcherYoutube.search(q,max_val);
         ScoreDoc[] some1 = hits.scoreDocs;
         for (int e = 0; e < some1.length; e++) {
             int docId = some1[e].doc;
@@ -48,7 +49,7 @@ class Search{
             return_value=return_value+d.get("id")+" "+ d.get("name")+ " " + d.get("creator")+ " "+d.get("description")+ " "+d.get("views")+ " "+d.get("dateCreation")+" "+d.get("Source")+"\n"+"~~";
         }
         Query q2 = queryParserTikTok.parse(search_arg);
-        TopDocs hits2 = searcherTikTok.search(q2, 200);
+        TopDocs hits2 = searcherTikTok.search(q2,max_val);
         ScoreDoc[] some2 = hits2.scoreDocs;
         for (int e = 0; e < some2.length; e++) {
             int docId = some2[e].doc;
