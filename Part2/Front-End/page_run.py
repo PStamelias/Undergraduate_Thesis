@@ -1,5 +1,6 @@
 from flask import Flask, redirect, url_for, render_template,request
 import os.path,subprocess
+from random import shuffle
 from subprocess import STDOUT,PIPE
 app = Flask(__name__, template_folder='template')
 
@@ -37,6 +38,7 @@ def Search():
         if ch=='\n':
             continue
         record=record+ch
+    shuffle(data)#sort randomly the list to show in random the results
     return render_template('result.html',Search_value=Input,list=data)
 
 
