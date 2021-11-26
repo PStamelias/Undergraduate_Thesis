@@ -44,7 +44,6 @@ class InputData{
                     }
                     if(readit==false)
                         PutData(file);
-                    System.out.println(readit);
                 }
             }
         }

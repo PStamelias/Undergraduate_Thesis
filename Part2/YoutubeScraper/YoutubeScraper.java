@@ -17,7 +17,8 @@ import java.util.concurrent.TimeUnit;
 class YoutubeScraper{
     public static void main(String[] args) {
         create_table();
-        CheckFolder();
+        int lastnumofile=CheckFolder();
+        int counter=0;
         List<String> Name_list=new ArrayList<String>();
         List<String> Creator_list=new ArrayList<String>();
         List<String> Description_list=new ArrayList<String>();
@@ -39,41 +40,30 @@ class YoutubeScraper{
             jse.executeScript("window.scrollBy(0, 1000)", "");
         String html = driver.getPageSource();/*get the html code from site*/
         Document doc = Jsoup.parse(html);/*parse the html code*/
-        //System.out.println(doc);
-        Elements pro_titles=doc.select("ytd-rich-item-renderer.style-scope.ytd-rich-grid-renderer");
-        Elements g=pro_titles.select("div#meta.style-scope.ytd-rich-grid-media");
-        Elements name=g.select("yt-formatted-string#video-title.style-scope.ytd-rich-grid-media");
-        for(Element a:name){
-            String my_text=a.text();
-            my_text = my_text.replace("|", " ");
-            Name_list.add(my_text);
-        }
-        Elements creat=pro_titles.select("a.yt-simple-endpoint.style-scope.yt-formatted-string");
-        for(Element te:creat){
-            String my_text=te.text();
-            my_text = my_text.replace("|", " ");
-            Creator_list.add(my_text);
-        }
-        Elements views=pro_titles.select("span.style-scope.ytd-video-meta-block");
-        int count=0;
-        for(Element t:views){
-            String my_text=t.text();
-            my_text = my_text.replace("|", " ");
-            if(my_text.contains("ago")){
-                DateCreation_list.add(my_text);
-                case1=0;
+        Elements First_Stage=doc.select("div#content.style-scope.ytd-app");
+        Elements Sec_Stage=First_Stage.select("ytd-page-manager#page-manager.style-scope.ytd-app");
+        Elements Third_Stage=Sec_Stage.select("div#contents.style-scope.ytd-rich-grid-renderer");
+        Elements Four_Stages=Third_Stage.select("ytd-rich-grid-row.style-scope.ytd-rich-grid-renderer");
+        for(Element elem:Four_Stages){
+            counter=counter+1;
+            Element info=elem.select("div#details.style-scope.ytd-rich-grid-media").first();
+            Element sec_info=info.select("div#meta.style-scope.ytd-rich-grid-media").first();
+            Element Name_elem=sec_info.select("h3.style-scope.ytd-rich-grid-media").first();
+            //System.out.println(Name_elem.text());
+            Name_list.add(Name_elem.text());
+            Element Creator=sec_info.select("div#byline-container.style-scope.ytd-video-meta-block").first();
+            Element Likes_Views=sec_info.select("div#metadata-line.style-scope.ytd-video-meta-block").first();
+            //System.out.println(Creator.text());
+            Creator_list.add(Creator.text());
+            Elements Likes_Views_Ver2=Likes_Views.select("span.style-scope.ytd-video-meta-block");
+            for(Element e:Likes_Views_Ver2){
+                //System.out.println(e.text());
+                if(e.text().contains("views"))
+                    Views_list.add(e.text());
+                if(e.text().contains("ago"))
+                    DateCreation_list.add(e.text());
+
             }
-            if(my_text.contains("views")){
-                Views_list.add(my_text);
-                case1=1;
-            }
-            count+=1;
-        }
-        Elements description=pro_titles.select("yt-formatted-string.description-snippet.style-scope.ytd-rich-grid-media");
-        for(Element c:description){
-            String my_text=c.text();
-            my_text = my_text.replace("|", " ");
-            Description_list.add(my_text);
         }
         int coun=0;
         for(String e:Creator_list){
@@ -83,15 +73,12 @@ class YoutubeScraper{
         for(String k:Views_list){
             views_coun+=1;
         }
-        int lastnumofile=CheckFolder();
-        System.out.println(lastnumofile);
         try{
             FileWriter myWriter = new FileWriter("/home/prokopis/Desktop/Undergraduate_Thesis/Part2/Data/out"+lastnumofile+".txt");
             for(int i=0;i<coun;i++){
-
                 myWriter.write(Name_list.get(i)+"|");
                 myWriter.write(Creator_list.get(i)+"|");
-                myWriter.write(Description_list.get(i)+"|");
+                myWriter.write(" "+"|");
                 if(i>=views_coun-1){
                     myWriter.write(" | ");
                     myWriter.write("\n");
