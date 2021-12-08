@@ -12,11 +12,16 @@ a{
 }
 </style>
 <body>
+
 <h1>LUCENE</h1>
 <h2>{{Search_value}}</h2>
 {%for element in data%}
-  <h1><a href={{element[1]}}{\color{black}>{{element[0]}}</a></h1>
-  <img src={{element[2]}}  width="200" height="200">
+  {% if  element[0] == "Youtube" %}
+    <h1><a href={{element[2]}}{\color{black}>{{element[1]}}</a></h1>
+    <img src={{element[3]}}  width="200" height="200">
+  {% else %}
+    <h1><a href="{{ url_for('Bookdetails',name=element[1],text=element[2],sound_tag=element[3],likes_number=element[4],comments_number=element[5],shares_number=element[6],date=element[7]) }}">{{element[1]}}</a></h1>
+  {% endif %}
 {% endfor %}
 </body>
 </html>

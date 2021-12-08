@@ -31,6 +31,43 @@ def return_title(info,type):
     return info
 
 
+def return_contentof_element(my_string):
+    pos=0
+    name=""
+    text=""
+    sound_Tag=""
+    likes_number=""
+    comments_number=""
+    shares_number=""
+    date=""
+    for i in range(0,len(my_string)):
+        if my_string[i]==" ":
+            continue
+        if my_string[i]==",":
+            pos=pos+1
+            continue
+        if pos==0:
+            name=name+my_string[i]
+        if pos==1:
+            text=text+my_string[i]
+        if pos==2:
+            sound_Tag=sound_Tag+my_string[i]
+        if pos==3:
+            likes_number=likes_number+my_string[i]
+        if pos==4:
+            comments_number=comments_number+my_string[i]
+        if pos==5:
+            shares_number=shares_number+my_string[i]
+        if pos==6:
+            date=date+my_string[i];
+    record=["TikTok",name,text,sound_Tag,likes_number,comments_number,shares_number,date]
+    return record
+
+
+
+
+
+
 ########################
 @app.route('/')
 def home():
@@ -62,7 +99,7 @@ def Search():
         if  element:
             type_source=return_page_scrape(element)
             if type_source=="Youtube":
-                e=[]
+                record=[]
                 title=return_title(element,"Youtube")
                 search = VideosSearch(title,limit = 1)
                 json_object = json.dumps(search.result(), indent = 1)
@@ -87,7 +124,7 @@ def Search():
                 url=url.replace('link','')
                 url=url.replace(' ','')
                 url=url[1:]
-                print(url)
+                #print(url)
                 thumb_value=""
                 begin=0
                 for k in range(0,len(url)):
@@ -97,12 +134,26 @@ def Search():
                     if begin==1:
                         thumb_value=thumb_value+url[k]
                 Thumb_Url="https://i.ytimg.com/vi/"+thumb_value+"/maxresdefault.jpg";
-                e=[title,url,Thumb_Url]
-                Videos_Info.append(e)
+                record=["Youtube",title,url,Thumb_Url]
+                Videos_Info.append(record)
             if type_source=="TikTok":
-                print(type_source)
-    return render_template('result.html',data=Videos_Info)
+                record=return_contentof_element(element)
+                Videos_Info.append(record)
+    return render_template('result.html',data=Videos_Info,Search_value=Input)
 
+
+
+@app.route('/Bookdetails',methods=('GET', 'POST'))
+def Bookdetails():
+    name = request.args.get('name')
+    text = request.args.get('text')
+    sound_tag = request.args.get('sound_tag')
+    likes_number = request.args.get('likes_number')
+    comments_number = request.args.get('comments_number')
+    shares_number = request.args.get('shares_number')
+    date = request.args.get('date')
+    record=[name,text,sound_tag,likes_number,comments_number,shares_number,date]
+    return render_template('TikTokResult.html',record=record)
 
 if __name__ == '__main__':
     app.run()

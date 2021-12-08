@@ -40,6 +40,9 @@ class Apach{
 	    String Sound_Tag;
 	    String text;
 	    String date;
+	    String LIKES_NUMBER;
+	    String COMMENTS_NUMBER;
+	    String SHARES_NUMBER;
 		try{
 			Class.forName("org.postgresql.Driver");
 		    c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/prokopis","prokopis","123");
@@ -55,12 +58,19 @@ class Apach{
 	      name= rs.getString(2);
 	      text = rs.getString(3);
 	      Sound_Tag=rs.getString(4);
+		  LIKES_NUMBER=rs.getString(5);
+		  COMMENTS_NUMBER=rs.getString(6);
+		  SHARES_NUMBER=rs.getString(7);      
 	      date=rs.getString(8);
 	      String y=String.valueOf(num);  
 	      doc.add(new StringField("id",y, Field.Store.YES));
           doc.add(new TextField("name", name, Field.Store.YES));
           doc.add(new TextField("text",text,Field.Store.YES));
           doc.add(new TextField("sound_Tag",Sound_Tag,Field.Store.YES));
+          doc.add(new TextField("likes_number",LIKES_NUMBER,Field.Store.YES));
+          doc.add(new TextField("comments_number",COMMENTS_NUMBER,Field.Store.YES));
+          doc.add(new TextField("shares_number",SHARES_NUMBER,Field.Store.YES));
+          doc.add(new TextField("date",date,Field.Store.YES));
           doc.add(new TextField("Source","TikTok",Field.Store.YES));
           writer.addDocument(doc);
 	    }

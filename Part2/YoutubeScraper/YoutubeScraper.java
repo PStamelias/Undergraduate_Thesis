@@ -36,8 +36,8 @@ class YoutubeScraper{
         }
         /*Scraping the DATA*/
         JavascriptExecutor jse = (JavascriptExecutor)driver;
-        for(int i=0;i<150;i++)
-            jse.executeScript("window.scrollBy(0, 1000)", "");
+        for(int i=0;i<180;i++)
+            jse.executeScript("window.scrollBy(0,800)", "");
         String html = driver.getPageSource();/*get the html code from site*/
         Document doc = Jsoup.parse(html);/*parse the html code*/
         Elements First_Stage=doc.select("div#content.style-scope.ytd-app");
@@ -73,6 +73,7 @@ class YoutubeScraper{
         for(String k:Views_list){
             views_coun+=1;
         }
+        System.out.println(lastnumofile);
         try{
             FileWriter myWriter = new FileWriter("/home/prokopis/Desktop/Undergraduate_Thesis/Part2/Data/out"+lastnumofile+".txt");
             for(int i=0;i<coun;i++){
