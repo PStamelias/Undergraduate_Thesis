@@ -46,7 +46,7 @@ class Search{
         for (int e = 0; e < some1.length; e++) {
             int docId = some1[e].doc;
             Document d = searcherYoutube.doc(docId);
-            return_value=return_value+d.get("name") +"  "+d.get("Source")+"\n"+"~~";
+            return_value=return_value+d.get("name") +","+d.get("Source")+","+d.get("creator")+","+d.get("dateCreation")+"\n"+"~~";
         }
         Query q2 = queryParserTikTok.parse(search_arg);
         TopDocs hits2 = searcherTikTok.search(q2,max_val);

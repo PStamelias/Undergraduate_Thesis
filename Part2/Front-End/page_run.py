@@ -19,6 +19,8 @@ def execute_java(java_file,Query):
     stdoute=stdout.decode()
     return stdoute
 
+
+
 def return_page_scrape(info):
     if "Youtube"  in info: 
         return "Youtube"
@@ -26,10 +28,12 @@ def return_page_scrape(info):
         return "TikTok"
 
 def return_title(info,type):
-    info=info.replace(type,'')
-    info=info.replace(' ','')
-    return info
-
+    mystr=""
+    for i  in range(0,len(info)):
+        if info[i]==',':
+            break
+        mystr=mystr+info[i]
+    return mystr
 
 def return_contentof_element(my_string):
     pos=0
@@ -64,6 +68,17 @@ def return_contentof_element(my_string):
     return record
 
 
+def return_creator(str):
+    coun=0
+    my_str=""
+    for i in range(0,len(str)):
+        if str[i]==',':
+            coun=coun+1
+            continue
+        if coun==2:
+            my_str=my_str+str[i]
+    return my_str
+
 
 
 
@@ -94,12 +109,14 @@ def Search():
             continue
         record=record+ch
     Videos_Info=[]
+    coun=0
     shuffle(data)#sort randomly the list to show in random the results
     for element in data:
         if  element:
             type_source=return_page_scrape(element)
             if type_source=="Youtube":
                 record=[]
+                creator=return_creator(element)
                 title=return_title(element,"Youtube")
                 search = VideosSearch(title,limit = 1)
                 json_object = json.dumps(search.result(), indent = 1)
@@ -116,11 +133,24 @@ def Search():
                         continue
                     stringdata=stringdata+ch
                 url=""
-                for element in lis_of_data:
-                    if "link"  in element and "watch" in element: 
-                        url=element
+                published_time=""
+                duration=""
+                enter_on_duration=False
+                for elem in lis_of_data:
+                    if "link"  in elem and "watch" in elem: 
+                        url=elem
+                    if "publishedTime:" in elem:
+                        published_time=elem
+                    if "duration:" in elem and enter_on_duration==False:
+                        duration=elem
+                        enter_on_duration=True
                 if not url:
                     continue
+                duration=duration.replace('duration','')
+                duration=duration.replace(' ','')
+                duration=duration[1:]
+                published_time=published_time.replace('publishedTime:','')
+                published_time=published_time[2:]
                 url=url.replace('link','')
                 url=url.replace(' ','')
                 url=url[1:]
@@ -134,12 +164,13 @@ def Search():
                     if begin==1:
                         thumb_value=thumb_value+url[k]
                 Thumb_Url="https://i.ytimg.com/vi/"+thumb_value+"/maxresdefault.jpg";
-                record=["Youtube",title,url,Thumb_Url]
+                record=["Youtube",title,url,Thumb_Url,duration,published_time,creator]
                 Videos_Info.append(record)
             if type_source=="TikTok":
                 record=return_contentof_element(element)
                 Videos_Info.append(record)
-    return render_template('result.html',data=Videos_Info,Search_value=Input)
+            coun=coun+1
+    return render_template('result.html',data=Videos_Info,Search_value=Input,len=coun)
 
 
 
@@ -154,6 +185,41 @@ def Bookdetails():
     date = request.args.get('date')
     record=[name,text,sound_tag,likes_number,comments_number,shares_number,date]
     return render_template('TikTokResult.html',record=record)
+
+
+
+
+
+@app.route('/How_Search_works',methods=('GET', 'POST'))
+def How_Search_works():
+    return render_template('Search_Info.html')
+
+
+
+
+
+@app.route('/About_us',methods=('GET', 'POST'))
+def About_us():
+    return render_template('About.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == '__main__':
     app.run()

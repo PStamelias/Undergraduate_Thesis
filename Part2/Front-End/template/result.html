@@ -2,26 +2,130 @@
 <html>
 <style>
 body {
-  background-color: DarkSeaGreen;
+  background-color: white;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 1420px;
+  background-color: #f1f1f1;
+}
+li a {
+  display: block;
+  color: #000;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+#containerIntro h1,
+#containerIntro form,
+#containerIntro p {
+    display: inline;
+    vertical-align: top;
+    font-size: 30px;
+    line-height: 40px;
+}
+.button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  border: 2px solid #e7e7e7;
+  background-color: #e7e7e7;
+  padding: 6px 6px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+.buttonclick{
+  background-color: white;
+  color: black;
+  border: 2px solid #e7e7e7;
+}
+.buttonclick:hover {background-color: #e7e7e7;}
+.aleft{
+  position: absolute;
+  left: 10px;
+}
+.aother{
+  left: 2210px;
+}
+
+.aright{
+  left: 90px;
+}
+a.ex1:link {
+  text-decoration: none;
+}
+
+a.ex1:visited {
+  text-decoration: none;
+}
+
+a.ex1:hover {
+  text-decoration: underline;
+}
+
+a.ex1:active {
+  text-decoration: underline;
 }
 p{
-  font-size: 150%;
+  font-size: 50%;
 }
 a{
   color: black;
 }
+.header img {
+  float: left;
+  width: 180px;
+  height: 150px;
+  background: #555;
+}
+
+.header p {
+  position: relative;
+  top: 18px;
+  left: 10px;
+}
 </style>
 <body>
-
-<h1>LUCENE</h1>
-<h2>{{Search_value}}</h2>
-{%for element in data%}
-  {% if  element[0] == "Youtube" %}
-    <h1><a href={{element[2]}}{\color{black}>{{element[1]}}</a></h1>
-    <img src={{element[3]}}  width="200" height="200">
-  {% else %}
-    <h1><a href="{{ url_for('Bookdetails',name=element[1],text=element[2],sound_tag=element[3],likes_number=element[4],comments_number=element[5],shares_number=element[6],date=element[7]) }}">{{element[1]}}</a></h1>
-  {% endif %}
-{% endfor %}
+<div id="containerIntro">
+    <h1>Lucene</h1>
+    <form action="/Search" method="post">
+      <input style="font-size:15pt;width: 450px" type="text" id="Query" name="Query" value="{{Search_value}}">
+      <button class="button buttonclick" type="submit">Search Lucene</button>
+    </form>
+    <h3>{{len}} Results</h3>
+    {%for element in data%}
+    {% if  element[0] == "Youtube" %}
+      <h1><a href={{element[2]}}>{{element[1]}}</a></h1>
+      <br/>
+      <div class="header">
+        <img src={{element[3]}}>
+        <p><small>Duration: {{element[4]}}</small></p>
+        <br/>
+        <p><small>Published: {{element[5]}}</small></p>
+        <br/>
+        <p><small>{{element[6]}}</small></p>
+      </div>
+      <br/>
+      <br/>
+    {% else %}
+      <h1><a href="{{ url_for('Bookdetails',name=element[1],text=element[2],sound_tag=element[3],likes_number=element[4],comments_number=element[5],shares_number=element[6],date=element[7]) }}">{{element[1]}}</a></h1>
+      <br/>
+      <br/>
+    {% endif %}
+    {% endfor %}
+</div>
+<h1 style="text-align:center">Lucene</h1>
+<ul>
+  <li><a class="aother">Greece</a></li>
+</ul>
 </body>
 </html>
