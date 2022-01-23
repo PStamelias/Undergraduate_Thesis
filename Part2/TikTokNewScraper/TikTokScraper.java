@@ -32,7 +32,7 @@ class TikTokScraper{
          System.err.println(e);
       }
       JavascriptExecutor jse = (JavascriptExecutor)driver;
-      for(int i=0;i<1500;i++)
+      for(int i=0;i<2000;i++)
          jse.executeScript("window.scrollBy(0,800)", "");
       String html = driver.getPageSource();/*get the html code from site*/
       Document doc = Jsoup.parse(html);/*parse the html code*/
