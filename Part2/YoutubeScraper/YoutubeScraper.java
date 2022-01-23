@@ -36,7 +36,7 @@ class YoutubeScraper{
         }
         /*Scraping the DATA*/
         JavascriptExecutor jse = (JavascriptExecutor)driver;
-        for(int i=0;i<180;i++)
+        for(int i=0;i<200;i++)
             jse.executeScript("window.scrollBy(0,800)", "");
         String html = driver.getPageSource();/*get the html code from site*/
         Document doc = Jsoup.parse(html);/*parse the html code*/

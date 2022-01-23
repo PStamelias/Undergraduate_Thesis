@@ -64,7 +64,7 @@ class Video{
 
 class TikTokCrawling{
     public static void main (String[] args) throws IOException{
-         String url="https://www.tiktok.com/foryou?lang=en";
+         String url="https://www.tiktok.com/@anna_amanatidouu";
          Fun2 f2=new Fun2();
          f2.Create_Table_on_Database();
          String file=get_info_from_URL(url);
@@ -103,92 +103,26 @@ class TikTokCrawling{
             if(counter0==2)
                break;
          }  
-         Load_More_classes(jse);                                                                                                                                                                                                                                                                                                                                                                                   
-         String html = driver.getPageSource();/*get the html code from site*/
-         System.out.println(html);
-         Document doc = Jsoup.parse(html);/*parse the html code*/
-         /*Navigation to info of videos*/
-         Elements photos = doc.select("div[id=__next]");
-         Elements a = photos.select("div[id=main]");
-         Elements b= a.select("div[class=tt-feed]");
-         Elements c=b.select("div.jsx-1115548107.video-feed-container");   
-         Elements span=b.select("span.lazyload-wrapper");
-         FileWriter fstream = new FileWriter("out.txt", true); //true tells to append data.
-         out = new BufferedWriter(fstream);
-         for(Element m:span){
-            Element f=m.select("div.jsx-179939359.jsx-2715883145.feed-item-content").first();
-            if(f==null)
-               continue;
-            String id_string=String.valueOf(ID); 
-            out.write(id_string);
-            out.write("|");
-            /*Taking info about user of video*/
-            Elements te=f.select("div.jsx-442964640.author-info-content.tt-author-info.jsx-3783556929.jsx-242381890");
-            Elements re=te.select("h3");
-            out.write(re.text());
-            /*******************************/
-            out.write("|");
-            /*Taking info about the text of Video*/
-            Elements y=f.select("div.tt-video-meta-caption.jsx-3783556929.jsx-1761782793");
-            Elements d =f.select("strong");
-            String tee="";
-            for(Element kj:d){
-               tee=tee+kj.text();
+         //Load_More_classes(jse);                                                                                                                                                                                                                                                                                                                                                                                   
+         for(int i=0;i<10;i++){
+            System.out.println(i);
+            jse.executeScript("window.scrollBy(0, 3000)", "");
+            try{
+               Thread.sleep(1000L);
+            }catch(Exception c){
+               System.err.println(c);
             }
-            out.write(tee);
-            /************************************/
-            out.write("|");
-            /*Taking info about the Sound Tag of video if exists*/
-            Elements bv=f.select("div.jsx-698935136.tt-video-music.item-music-info-V4.jsx-2204354762.black");
-            Element sv=bv.select("div.jsx-698935136.video-music-content.pause.music-title-decoration").first();
-            out.write(sv.text());
-            /***************************************************/
-            out.write("|");
-            /*Taking the number of likes,comments and shares*/ 
-            Element ko=f.select("div.jsx-179939359.jsx-2715883145.item-video-container").first();
-            Element lo=ko.select("div.jsx-1045706868.pc-action-bar.engagement-v2.horizontal").first();
-            if(lo==null)
-               lo=ko.select("div.jsx-1045706868.pc-action-bar.item-action-bar.vertical").first();
-            if(lo==null)
-               lo=ko.select("div.jsx-1045706868.pc-action-bar.item-action-bar-v4.horizontal").first();
-            Elements ui=lo.select("strong");/*strong classes hold the data*/
-            int coun=1;
-            for(Element eee:ui){
-               String data=eee.text();
-               if(data.contains("M")==true||data.contains("K")==true||data.contains("B")==true){
-                  String my_string="";
-                  for(int i=0;i<data.length();i++){
-                     char charAtpos = data.charAt(i);
-                     if((charAtpos>='0'&&charAtpos<='9')||charAtpos=='.')
-                        my_string=my_string+charAtpos;
-                     else 
-                        break;
-                  }
-                  float my_float=Float.parseFloat(my_string);  
-                  if(data.contains("M")==true)
-                     my_float*=1000000;
-                  else if(data.contains("K"))
-                     my_float*=1000;
-                  else if(data.contains("B"))
-                     my_float*=1000000000;
-                  int g=(int)my_float;
-                  data=String.valueOf(g);
-               }
-               out.write(data);
-               if(coun==3)
-                  break;
-               out.write("|");
-               coun+=1;
-            }
-            /*************************************************/
-            ID+=1;
-            out.write("\n");
          }
-         out.close();
-         fstream.close();
-         driver.close();
+         String html = driver.getPageSource();/*get the html code from site*/
+         Document doc = Jsoup.parse(html);
+         Elements info=doc.select("div.tiktok-16uk8e4-DivItemContainer.e1z53d08");
+         for(Element k:info){
+            System.out.println("mitsos");
+         }
+         System.out.println(html);
+         //driver.close();
          /*****************************/
-         return "out.txt";
+         return null;
       }
       public static void Create_Database_and_put_info_on_it(String file) throws IOException{
          try (BufferedReader br = new BufferedReader(new FileReader(file))) {
@@ -237,7 +171,7 @@ class TikTokCrawling{
       }
    }
    public static void Load_More_classes(JavascriptExecutor jse){
-      Thread[] threads = new Thread[3];
+      /*Thread[] threads = new Thread[3];
       for (int i = 0; i < threads.length; i++) {
          threads[i] = new Thread(new Runnable() {
             public void run() {
@@ -261,6 +195,6 @@ class TikTokCrawling{
          }catch(Exception c){
             System.err.println(c);
          }
-      }
+      }*/
    }  
 }

@@ -4,6 +4,7 @@ from random import shuffle
 from subprocess import STDOUT,PIPE
 import json
 import os
+from itertools import zip_longest
 import requests
 from youtubesearchpython import VideosSearch
 app = Flask(__name__, template_folder='template')
@@ -80,7 +81,21 @@ def return_creator(str):
     return my_str
 
 
-
+def grouper(n, iterable):
+    my_list=[]
+    num=0
+    val=0
+    for k in range(0,len(iterable)):
+        if val==n:
+            my_list.append(iterable[k])
+            num=num+1
+            if num%10==0:
+                val=val+1
+        else:
+            num=num+1
+            if num%10==0:
+                val=val+1
+    return my_list
 
 
 ########################
@@ -89,11 +104,8 @@ def home():
     return render_template('Main_Page.html')
 
 
-@app.route("/Search", methods=['POST'])
-def Search():
-    counter1=0
-    Query = request.form.getlist('Query')
-    Input = Query[0]
+
+def compute_result(Query,Input):
     compile_java('Search.java')
     result=execute_java('Search.java',Input)
     data=[]
@@ -170,12 +182,10 @@ def Search():
                 record=return_contentof_element(element)
                 Videos_Info.append(record)
             coun=coun+1
-    return render_template('result.html',data=Videos_Info,Search_value=Input,len=coun)
+    return Videos_Info
 
-
-
-@app.route('/Bookdetails',methods=('GET', 'POST'))
-def Bookdetails():
+@app.route('/Other',methods=('GET', 'POST'))
+def Other():
     name = request.args.get('name')
     text = request.args.get('text')
     sound_tag = request.args.get('sound_tag')
@@ -195,29 +205,59 @@ def How_Search_works():
     return render_template('Search_Info.html')
 
 
+@app.route('/Searching',methods=('GET', 'POST'))
+def SearchResult():
+    global List_Of_Result
+    Query = request.form.getlist('Query')
+    Query_current = request.args.getlist('Query')
+    num   = request.args.get('chunck_num')
+    result_list  = request.args.getlist('result_list')
+    previous_val  = request.args.get('previous_val')
+    print("num=",num)
+    print("Query=",Query)
+    print("previous_val=",previous_val)
+    print("Query_current=",Query_current)
+    if Query:
+        print("query")
+        Input = Query[0]
+        records=compute_result(Query,Input)
+        List_Of_Result=records
+        print("----------------------------")
+        print("ela")
+        coun=len(records)
+        sizes=coun/10
+        sizes=int(sizes)
+        if coun%10!=0:
+            sizes=sizes+1
+        print("sizes=",sizes)
+        n=sizes
+        sub = grouper(0,records)
+        for i in range(0,len(sub)):
+            print("sub[i]=",sub[i])
+        print(type(sub))
+        size_sub_list=10
+        print("size_sub_list=",size_sub_list)
+        return render_template('Result2.html',val=1,result_list=records,sub_list=sub,Search_value=Input,size=sizes,previous_val=Input,len_list=coun,size_sub_list=size_sub_list,chunks_num=sizes)
+    if previous_val==Query_current[0]:
+        Input = Query_current[0]
+        coun=len(List_Of_Result)
+        sizes=coun/10
+        sizes=int(sizes)
+        if coun%10!=0:
+            sizes=sizes+1
+        n=sizes
+        sub = grouper(int(num),List_Of_Result)
+        mylist=[]
+        for i in range(0,len(sub)):
+            mylist.append(sub[i])
+        return render_template('Result2.html',val=1,result_list=List_Of_Result,sub_list=mylist,Search_value=Input,size=sizes,previous_val=Input,len_list=coun,size_sub_list=10,chunks_num=sizes)
+
 
 
 
 @app.route('/About_us',methods=('GET', 'POST'))
 def About_us():
     return render_template('About.html')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

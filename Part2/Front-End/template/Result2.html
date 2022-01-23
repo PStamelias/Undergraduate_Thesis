@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<style>
+body {
+  background-color: white;
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 1420px;
+  background-color: #f1f1f1;
+}
+li a {
+  display: block;
+  color: #000;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+#containerIntro h1,
+#containerIntro form,
+#containerIntro p {
+    display: inline;
+    vertical-align: top;
+    font-size: 30px;
+    line-height: 30px;
+}
+.button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  border: 2px solid #e7e7e7;
+  background-color: #e7e7e7;
+  padding: 6px 6px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+.buttonclick{
+  background-color: white;
+  color: black;
+  border: 2px solid #e7e7e7;
+}
+.buttonclick:hover {background-color: #e7e7e7;}
+.aleft{
+  position: absolute;
+  left: 10px;
+}
+.Base{
+  left: 2210px;
+}
+
+.aright{
+  left: 90px;
+}
+a.ex1:link {
+  text-decoration: none;
+}
+
+a.ex1:visited {
+  text-decoration: none;
+}
+
+a.ex1:hover {
+  text-decoration: underline;
+}
+
+a.ex1:active {
+  text-decoration: underline;
+}
+p{
+  font-size: 50%;
+}
+a{
+  color: black;
+}
+.header img {
+  float: left;
+  width: 100px;
+  height: 120px;
+  background: #555;
+}
+
+.header p {
+  position: relative;
+  top: 16px;
+  left: 10px;
+}
+h3{
+  display: table-cell;
+}
+.tab {
+  tab-size: 2;
+}
+.center {
+  text-align: center;
+}
+</style>
+<body>
+<div id="containerIntro">
+    <h1>Search Engine</h1>
+    <form action="/Searching" method="post">
+      <input style="font-size:15pt;width: 450px" type="text" id="Query" name="Query" value="{{Search_value}}">
+      <input style="font-size:15pt;width: 450px" type="hidden" id="previous_val" name="previous_val" value="{{previous_val}}">
+      <button class="button buttonclick" type="submit">Search</button>
+    </form>
+    <h3>{{len_list}} Results</h3>
+    <br/>
+    <br/>
+    {%for element in sub_list%}
+      {% if  element[0] == "Youtube" %}
+        <h3><a  href={{element[2]}}>{{element[1]}}</a></h3>
+        <div class="header">
+          <img src={{element[3]}}>
+          <p><small>Duration: {{element[4]}}</small></p>
+          <br/>
+          <p><small>Published: {{element[5]}}</small></p>
+          <br/>
+          <p><small>{{element[6]}}</small></p>
+        </div>
+        <br/>
+        <br/>
+        {% else %}
+        <h3><a href="{{ url_for('Other',name=element[1],text=element[2],sound_tag=element[3],likes_number=element[4],comments_number=element[5],shares_number=element[6],date=element[7]) }}">{{element[1]}}</a></h3>
+        <br/>
+      {% endif %}
+    {% endfor %}
+</div>
+<h2 style="text-align:center">Search Engine</h2>
+<div class="center">
+{%for i in range(0, chunks_num)%}
+      <h3><pre>    <a  href="{{ url_for('SearchResult',chunck_num=i,Query=Search_value,previous_val=previous_val,result_list=result_list )}}">{{i+1}}</a></pre></h3>
+{%endfor%}
+</div>
+<ul>
+  <li><a class="Base">Greece</a></li>
+</ul>
+</body>
+</html>
