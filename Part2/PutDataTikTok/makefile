@@ -1,8 +1,8 @@
 run: 
-	java  -cp .:postgresql-42.2.18.jar Main
+	java  -cp .:postgresql-42.2.18.jar InputData
 
 compile:
-	javac -cp  .:postgresql-42.2.18.jar Main.java
+	javac -cp  .:postgresql-42.2.18.jar InputData.java
 
 clean:
-	rm -r Main.class 
+	rm -r InputData.class 
