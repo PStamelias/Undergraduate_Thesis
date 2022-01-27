@@ -27,7 +27,7 @@ class InputData{
         } 
     }
     public static void Put_Data_to_Database(String str) throws Exception{
-        System.out.println(str);
+        //System.out.println(str);
         Class.forName("org.postgresql.Driver");
         Connection c=null;
         c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/prokopis","prokopis","123");
@@ -51,26 +51,26 @@ class InputData{
             else if(pos==3)
                 Link=Link+str.charAt(i);
         }
-        System.out.println(name);
+        /*System.out.println(name);
         System.out.println(Text);
         System.out.println(Play_times);
-        System.out.println(Link);
+        System.out.println(Link);*/
         Statement stmt1=c.createStatement();
         ResultSet rs=stmt1.executeQuery("select * from TikTokScrapedVideoTable order by ID desc limit 1");
         while(rs.next()){
             num = rs.getInt(1);
         }
-        System.out.println(num);
+        //System.out.println(num);
         num=num+1;
         stmt1.close();
-        /*PreparedStatement st = c.prepareStatement("INSERT INTO TikTokScrapedVideoTable (ID,NAME,TEXT,PLAY_NUM,LINK) VALUES (?,?,?,?,?)");
+        PreparedStatement st = c.prepareStatement("INSERT INTO TikTokScrapedVideoTable (ID,NAME,TEXT,PLAY_NUM,LINK) VALUES (?,?,?,?,?)");
         st.setInt(1,num);
         st.setString(2,name);
         st.setString(3,Text);
         st.setString(4,Play_times);
         st.setString(5,Link);
         st.executeUpdate();
-        st.close();*/
+        st.close();
 
     }
     public static void  Create_Table(){
