@@ -1,7 +1,17 @@
-[61747:61747:0124/210636.325908:ERROR:sandbox_linux.cc(376)] InitializeSandbox() called with multiple threads in process gpu-process.
-[61703:61703:0124/210636.943801:INFO:CONSOLE(0)] "Slow network is detected. See https://www.chromestatus.com/feature/5636954674692096 for more details. Fallback font will be used while loading: chrome://resources/roboto/roboto-regular.woff2", source: chrome://new-tab-page/ (0)
-[61703:61732:0124/210638.707665:ERROR:chrome_browser_main_extra_parts_metrics.cc(226)] crbug.com/1216328: Checking Bluetooth availability started. Please report if there is no report that this ends.
-[61703:61732:0124/210638.710790:ERROR:chrome_browser_main_extra_parts_metrics.cc(229)] crbug.com/1216328: Checking Bluetooth availability ended.
-[61703:61732:0124/210638.710927:ERROR:chrome_browser_main_extra_parts_metrics.cc(232)] crbug.com/1216328: Checking default browser status started. Please report if there is no report that this ends.
-[61703:61732:0124/210639.336985:ERROR:chrome_browser_main_extra_parts_metrics.cc(236)] crbug.com/1216328: Checking default browser status ended.
-[61703:61703:0124/210644.079062:WARNING:pref_notifier_impl.cc(40)] Pref observer for media_router.cast_allow_all_ips found at shutdown.
+[58901:58901:0127/041510.352652:ERROR:sandbox_linux.cc(376)] InitializeSandbox() called with multiple threads in process gpu-process.
+[58857:58882:0127/041513.697036:ERROR:chrome_browser_main_extra_parts_metrics.cc(226)] crbug.com/1216328: Checking Bluetooth availability started. Please report if there is no report that this ends.
+[58857:58882:0127/041513.702593:ERROR:chrome_browser_main_extra_parts_metrics.cc(229)] crbug.com/1216328: Checking Bluetooth availability ended.
+[58857:58882:0127/041513.702680:ERROR:chrome_browser_main_extra_parts_metrics.cc(232)] crbug.com/1216328: Checking default browser status started. Please report if there is no report that this ends.
+[58857:58882:0127/041514.406256:ERROR:chrome_browser_main_extra_parts_metrics.cc(236)] crbug.com/1216328: Checking default browser status ended.
+[58941:15:0127/041522.882279:WARNING:used_ids.h(55)] Duplicate id found. Reassigning from 104 to 127
+[58941:15:0127/041522.886139:WARNING:used_ids.h(55)] Duplicate id found. Reassigning from 106 to 125
+[58941:15:0127/041522.886311:WARNING:used_ids.h(55)] Duplicate id found. Reassigning from 112 to 124
+[58941:15:0127/041522.886379:WARNING:used_ids.h(55)] Duplicate id found. Reassigning from 102 to 123
+[58941:15:0127/041522.886465:WARNING:used_ids.h(55)] Duplicate id found. Reassigning from 103 to 122
+[58941:15:0127/041522.886529:WARNING:used_ids.h(55)] Duplicate id found. Reassigning from 105 to 121
+[58941:15:0127/041522.886640:WARNING:media_session.cc(966)] RED codec red is missing an associated payload type.
+[58941:15:0127/041522.886693:WARNING:used_ids.h(55)] Duplicate id found. Reassigning from 110 to 120
+[58941:15:0127/041522.886755:WARNING:used_ids.h(55)] Duplicate id found. Reassigning from 111 to 119
+[58902:58913:0127/041535.338267:ERROR:broker_posix.cc(40)] Recvmsg error: Connection reset by peer (104)
+[58902:58913:0127/041535.339504:ERROR:broker_posix.cc(110)] Error sending sync broker message: Broken pipe (32)
+[58902:58913:0127/041535.342257:ERROR:broker_posix.cc(110)] Error sending sync broker message: Broken pipe (32)

@@ -14,8 +14,9 @@ import java.io.BufferedWriter;
 import java.io.FileWriter; 
 import java.io.IOException; 
 import java.io.PrintWriter;
-
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 class InputData{
     public static void main(String args[]) throws Exception{
         File folder = new File("/home/prokopis/Desktop/Undergraduate_Thesis/Part2/Data");

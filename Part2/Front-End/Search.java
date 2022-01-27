@@ -38,7 +38,7 @@ class Search{
         IndexSearcher searcherTikTok  = createSearcherTikTok();
         Analyzer analyzerYoutube = new StandardAnalyzer();
         Analyzer analyzerTikTok = new StandardAnalyzer();
-        MultiFieldQueryParser queryParserTikTok = new MultiFieldQueryParser(new String[]{"name","text","sound_Tag","likes_number","comments_number","shares_number","date"},analyzerTikTok);
+        MultiFieldQueryParser queryParserTikTok = new MultiFieldQueryParser(new String[]{"name","text","Play_times"},analyzerTikTok);
         MultiFieldQueryParser queryParserYoutube = new MultiFieldQueryParser(new String[]{"name","creator","description","views","dateCreation"},analyzerYoutube);
         Query q = queryParserYoutube.parse(search_arg);
         TopDocs hits = searcherYoutube.search(q,max_val);
@@ -54,7 +54,7 @@ class Search{
         for (int e = 0; e < some2.length; e++) {
             int docId = some2[e].doc;
             Document d = searcherTikTok.doc(docId);
-            return_value=return_value+d.get("name")+","+d.get("text")+","+d.get("sound_Tag")+","+d.get("likes_number")+","+d.get("comments_number")+","+d.get("shares_number")+","+d.get("date")+","+d.get("Source")+","+"~~";
+            return_value=return_value+d.get("name")+","+d.get("text")+","+d.get("Play_times")+","+d.get("Source")+"~~";
         }
         System.out.println(return_value);
     }

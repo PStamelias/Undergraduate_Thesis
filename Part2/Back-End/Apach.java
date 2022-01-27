@@ -37,12 +37,9 @@ class Apach{
 		Connection c=null;
 		int num;
 		String name;
-	    String Sound_Tag;
 	    String text;
-	    String date;
-	    String LIKES_NUMBER;
-	    String COMMENTS_NUMBER;
-	    String SHARES_NUMBER;
+	    String Play_times;
+	    String Link_str;
 		try{
 			Class.forName("org.postgresql.Driver");
 		    c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/prokopis","prokopis","123");
@@ -51,26 +48,20 @@ class Apach{
 			System.out.println(e);
 		}
 		Statement stmt1=c.createStatement();
-	    ResultSet rs=stmt1.executeQuery("select * from TikTokVideoDataTable ");
+	    ResultSet rs=stmt1.executeQuery("select * from TikTokScrapedVideoTable ");
 	    while(rs.next()){
 	      Document doc = new Document();
 	      num = rs.getInt(1);
 	      name= rs.getString(2);
 	      text = rs.getString(3);
-	      Sound_Tag=rs.getString(4);
-		  LIKES_NUMBER=rs.getString(5);
-		  COMMENTS_NUMBER=rs.getString(6);
-		  SHARES_NUMBER=rs.getString(7);      
-	      date=rs.getString(8);
-	      String y=String.valueOf(num);  
-	      doc.add(new StringField("id",y, Field.Store.YES));
+	      Play_times = rs.getString(4);
+	      Link_str=rs.getString(5);
+	      String num_str=String.valueOf(num);  
+	      doc.add(new StringField("id",num_str, Field.Store.YES));
           doc.add(new TextField("name", name, Field.Store.YES));
           doc.add(new TextField("text",text,Field.Store.YES));
-          doc.add(new TextField("sound_Tag",Sound_Tag,Field.Store.YES));
-          doc.add(new TextField("likes_number",LIKES_NUMBER,Field.Store.YES));
-          doc.add(new TextField("comments_number",COMMENTS_NUMBER,Field.Store.YES));
-          doc.add(new TextField("shares_number",SHARES_NUMBER,Field.Store.YES));
-          doc.add(new TextField("date",date,Field.Store.YES));
+          doc.add(new TextField("play_times",Play_times,Field.Store.YES));
+          doc.add(new TextField("link_str",Link_str,Field.Store.YES));
           doc.add(new TextField("Source","TikTok",Field.Store.YES));
           writer.addDocument(doc);
 	    }

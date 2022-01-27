@@ -108,6 +108,7 @@ def home():
 def compute_result(Query,Input):
     compile_java('Search.java')
     result=execute_java('Search.java',Input)
+    print(result)
     data=[]
     urls=[]
     thumbnails=[]

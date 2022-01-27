@@ -59,13 +59,14 @@ class Main{
         List<String> url_list=new ArrayList<String>();
         List<String> Name_list=new ArrayList<String>();
         List<String> Text_list=new ArrayList<String>();
+        List<String> Play_List=new ArrayList<String>();
         ChromeOptions chrome_options = new ChromeOptions();
         chrome_options.addArguments("user-data-dir=selenium"); 
         String name="https://www.tiktok.com/@"+str+"?lang=el-GR";
         ChromeDriver driver = new ChromeDriver(chrome_options=chrome_options);/*Opening the driver*/
         driver.get(name);
         try{
-            TimeUnit.SECONDS.sleep(3);
+            TimeUnit.SECONDS.sleep(2);
         }
         catch(Exception e){
             System.err.println(e);
@@ -82,6 +83,7 @@ class Main{
             String digits = Likes.replaceAll("[^0-9.K]", "");
             if(digits.charAt(0)=='.')
                 digits = digits.substring(1);
+            Play_List.add(digits);
             Element elem2=elem.select("a").first();
             String url = elem2.attr("href");
             url_list.add(url);
@@ -100,6 +102,7 @@ class Main{
             for(int i=0;i<counter;i++){
                 fw.write(str+"|");
                 fw.write(Text_list.get(i)+"|");
+                fw.write(Play_List.get(i)+"|");
                 fw.write(url_list.get(i)+"\n");
             }
             fw.close();
