@@ -127,9 +127,24 @@ h3{
         </div>
         <br/>
         <br/>
-        {% else %}
-        <h3><a href="{{ url_for('Other',name=element[1],text=element[2],sound_tag=element[3],likes_number=element[4],comments_number=element[5],shares_number=element[6],date=element[7]) }}">{{element[1]}}</a></h3>
         <br/>
+        <br/>
+        <br/>
+        <br/>
+        {% else %}
+        <h3><a  href={{element[4]}}>{{element[2]}}</a></h3>
+        <div class="header">
+          <img src="/static/Question.png">
+          <p><small>User: {{element[1]}}</small></p>
+          <br/>
+          <p><small>&#9658; {{element[3]}}</small></p>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+        </div>
       {% endif %}
     {% endfor %}
 </div>

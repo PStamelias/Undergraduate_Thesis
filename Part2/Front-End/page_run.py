@@ -31,7 +31,7 @@ def return_page_scrape(info):
 def return_title(info,type):
     mystr=""
     for i  in range(0,len(info)):
-        if info[i]==',':
+        if info[i]=='|':
             break
         mystr=mystr+info[i]
     return mystr
@@ -46,9 +46,7 @@ def return_contentof_element(my_string):
     shares_number=""
     date=""
     for i in range(0,len(my_string)):
-        if my_string[i]==" ":
-            continue
-        if my_string[i]==",":
+        if my_string[i]=="|":
             pos=pos+1
             continue
         if pos==0:

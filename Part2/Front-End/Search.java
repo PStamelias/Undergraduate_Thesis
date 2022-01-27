@@ -46,7 +46,7 @@ class Search{
         for (int e = 0; e < some1.length; e++) {
             int docId = some1[e].doc;
             Document d = searcherYoutube.doc(docId);
-            return_value=return_value+d.get("name") +","+d.get("Source")+","+d.get("creator")+","+d.get("dateCreation")+"\n"+"~~";
+            return_value=return_value+d.get("name") +"|"+d.get("Source")+"|"+d.get("creator")+"|"+d.get("dateCreation")+"\n"+"~~";
         }
         Query q2 = queryParserTikTok.parse(search_arg);
         TopDocs hits2 = searcherTikTok.search(q2,max_val);
@@ -54,7 +54,7 @@ class Search{
         for (int e = 0; e < some2.length; e++) {
             int docId = some2[e].doc;
             Document d = searcherTikTok.doc(docId);
-            return_value=return_value+d.get("name")+","+d.get("text")+","+d.get("Play_times")+","+d.get("Source")+"~~";
+            return_value=return_value+d.get("name")+"|"+d.get("text")+"|"+d.get("play_times")+"|"+d.get("link_str")+"|"+d.get("Source")+"~~";
         }
         System.out.println(return_value);
     }
