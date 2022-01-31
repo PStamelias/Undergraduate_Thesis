@@ -1,5 +1,4 @@
-2022/01/27-04:15:10.082 3 Reusing MANIFEST /home/prokopis/Desktop/Undergraduate_Thesis/Part2/TikTokNewScraper/TikTokGetVideos/selenium/Default/Local Storage/leveldb/MANIFEST-000001
-2022/01/27-04:15:10.085 3 Recovering log #61
-2022/01/27-04:15:10.085 3 (ignoring error) /home/prokopis/Desktop/Undergraduate_Thesis/Part2/TikTokNewScraper/TikTokGetVideos/selenium/Default/Local Storage/leveldb/000061.log: dropping 28632 bytes; Corruption: checksum mismatch
-2022/01/27-04:15:10.086 3 (ignoring error) /home/prokopis/Desktop/Undergraduate_Thesis/Part2/TikTokNewScraper/TikTokGetVideos/selenium/Default/Local Storage/leveldb/000061.log: dropping 16 bytes; Corruption: missing start of fragmented record(2)
-2022/01/27-04:15:10.087 3 Reusing old log /home/prokopis/Desktop/Undergraduate_Thesis/Part2/TikTokNewScraper/TikTokGetVideos/selenium/Default/Local Storage/leveldb/000061.log 
+2022/01/31-04:58:28.579 3 Reusing MANIFEST /home/prokopis/Desktop/Undergraduate_Thesis/Part2/TikTokNewScraper/TikTokGetVideos/selenium/Default/Local Storage/leveldb/MANIFEST-000001
+2022/01/31-04:58:28.584 3 Recovering log #126
+2022/01/31-04:58:28.586 3 (ignoring error) /home/prokopis/Desktop/Undergraduate_Thesis/Part2/TikTokNewScraper/TikTokGetVideos/selenium/Default/Local Storage/leveldb/000126.log: dropping 20179 bytes; Corruption: checksum mismatch
+2022/01/31-04:58:28.590 3 Reusing old log /home/prokopis/Desktop/Undergraduate_Thesis/Part2/TikTokNewScraper/TikTokGetVideos/selenium/Default/Local Storage/leveldb/000126.log 

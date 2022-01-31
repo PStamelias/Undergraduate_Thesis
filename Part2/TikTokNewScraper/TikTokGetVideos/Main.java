@@ -60,6 +60,7 @@ class Main{
         List<String> Name_list=new ArrayList<String>();
         List<String> Text_list=new ArrayList<String>();
         List<String> Play_List=new ArrayList<String>();
+        List<String> Thumbnail_List=new ArrayList<String>();
         ChromeOptions chrome_options = new ChromeOptions();
         chrome_options.addArguments("user-data-dir=selenium"); 
         String name="https://www.tiktok.com/@"+str+"?lang=el-GR";
@@ -72,11 +73,12 @@ class Main{
             System.err.println(e);
         }
         JavascriptExecutor jse = (JavascriptExecutor)driver;
-        for(int i=0;i<20;i++){
+        for(int i=0;i<30;i++){
             jse.executeScript("window.scrollBy(0,100)", "");
         }
         String html = driver.getPageSource();/*get the html code from site*/
         Document doc = Jsoup.parse(html);/*parse the html code*/
+        //System.out.println(doc);
         Elements video=doc.select("div.tiktok-yz6ijl-DivWrapper.e1u9v4ua1");
         for(Element elem:video){
             String Likes=elem.text();
@@ -88,6 +90,12 @@ class Main{
             String url = elem2.attr("href");
             url_list.add(url);
             Name_list.add(name);
+        }
+        for(Element elem:video){
+            Element elem_img=elem.select("img").first();
+            String img_Scr = elem_img.attr("src");
+            Thumbnail_List.add(img_Scr);
+            //System.out.println(img_Scr);
         }
         int counter=0;
         for(Element elem:video){
@@ -103,7 +111,8 @@ class Main{
                 fw.write(str+"|");
                 fw.write(Text_list.get(i)+"|");
                 fw.write(Play_List.get(i)+"|");
-                fw.write(url_list.get(i)+"\n");
+                fw.write(url_list.get(i)+"|");
+                fw.write(Thumbnail_List.get(i)+"\n");
             }
             fw.close();
         }

@@ -39,6 +39,7 @@ class Apach{
 		String name;
 	    String text;
 	    String Play_times;
+	 	String thumbnail;
 	    String Link_str;
 		try{
 			Class.forName("org.postgresql.Driver");
@@ -48,7 +49,7 @@ class Apach{
 			System.out.println(e);
 		}
 		Statement stmt1=c.createStatement();
-	    ResultSet rs=stmt1.executeQuery("select * from TikTokScrapedVideoTable ");
+	    ResultSet rs=stmt1.executeQuery("select * from WEBSCRAPEDTIKTOKDATA ");
 	    while(rs.next()){
 	     	Document doc = new Document();
 	     	num = rs.getInt(1);
@@ -56,17 +57,20 @@ class Apach{
 	     	text = rs.getString(3);
 	     	Play_times = rs.getString(4);
 	    	Link_str=rs.getString(5);
+	    	thumbnail= rs.getString(6);
 	    	String num_str=String.valueOf(num); 
-	    	/*System.out.println("num="+num);
+	    	System.out.println("num="+num);
 	     	System.out.println("name="+name);
 	    	System.out.println("text="+text);
 	    	System.out.println("Play_times="+Play_times);
-	    	System.out.println("Link_str="+Link_str);*/
+	    	System.out.println("Link_str="+Link_str);
+	    	System.out.println("thumbnail_link"+thumbnail);
 	    	doc.add(new StringField("id",num_str, Field.Store.YES));
         	doc.add(new TextField("name", name, Field.Store.YES));
         	doc.add(new TextField("text",text,Field.Store.YES));
         	doc.add(new TextField("play_times",Play_times,Field.Store.YES));
         	doc.add(new TextField("link_str",Link_str,Field.Store.YES));
+        	doc.add(new TextField("thumbnail_link",thumbnail,Field.Store.YES));
         	doc.add(new TextField("Source","TikTok",Field.Store.YES));
         	writer.addDocument(doc);
 	    }

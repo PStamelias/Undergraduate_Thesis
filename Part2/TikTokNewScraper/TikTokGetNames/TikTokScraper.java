@@ -35,8 +35,10 @@ class TikTokScraper{
          System.err.println(e);
       }
       JavascriptExecutor jse = (JavascriptExecutor)driver;
-      for(int i=0;i<500;i++)
+      for(int i=0;i<800;i++){
+         System.out.println(i);
          jse.executeScript("window.scrollBy(0,800)", "");
+      }
       String html = driver.getPageSource();/*get the html code from site*/
       Document doc = Jsoup.parse(html);/*parse the html code*/
       //System.out.println(doc);
@@ -82,13 +84,33 @@ class TikTokScraper{
       try{
          String filename= "result.txt";
          FileWriter fw = new FileWriter(filename,true);
-         for (String value :newList)
+         for (String value :newList){
+            boolean exists_value=check_if_exist_ontable(value);
+            if(exists_value==true)
+               continue;
             fw.write(value+"\n");
+         }
          fw.close();
       }
       catch(IOException ioe)
       {
          System.err.println("IOException: " + ioe.getMessage());
       }
+   }
+   public static boolean check_if_exist_ontable(String str) throws Exception{
+      Class.forName("org.postgresql.Driver");
+      Connection c=null;
+      String name;
+      c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/prokopis","prokopis","123");
+      Statement stmt1=c.createStatement();
+      ResultSet rs=stmt1.executeQuery("select * from WEBSCRAPEDTIKTOKDATA order by ID desc limit 1");
+      while(rs.next()){
+         name = rs.getString(2);
+         System.out.println(name);
+         if(name.equals(str)==true)
+            return true;
+      }
+      stmt1.close();
+      return false;
    }
 }

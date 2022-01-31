@@ -1,4 +1,3 @@
-2022/01/25-00:15:16.902 5 Reusing MANIFEST /home/prokopis/Desktop/Undergraduate_Thesis/Part2/TikTokNewScraper/TikTokGetNames/selenium/Default/Local Storage/leveldb/MANIFEST-000001
-2022/01/25-00:15:16.904 5 Recovering log #4
-2022/01/25-00:15:16.906 5 (ignoring error) /home/prokopis/Desktop/Undergraduate_Thesis/Part2/TikTokNewScraper/TikTokGetNames/selenium/Default/Local Storage/leveldb/000004.log: dropping 5378 bytes; Corruption: checksum mismatch
-2022/01/25-00:15:16.908 5 Reusing old log /home/prokopis/Desktop/Undergraduate_Thesis/Part2/TikTokNewScraper/TikTokGetNames/selenium/Default/Local Storage/leveldb/000004.log 
+2022/01/28-23:16:01.003 5 Reusing MANIFEST /home/prokopis/Desktop/Undergraduate_Thesis/Part2/TikTokNewScraper/TikTokGetNames/selenium/Default/Local Storage/leveldb/MANIFEST-000001
+2022/01/28-23:16:01.005 5 Recovering log #6
+2022/01/28-23:16:01.007 5 Reusing old log /home/prokopis/Desktop/Undergraduate_Thesis/Part2/TikTokNewScraper/TikTokGetNames/selenium/Default/Local Storage/leveldb/000006.log 

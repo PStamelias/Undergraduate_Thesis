@@ -40,11 +40,9 @@ def return_contentof_element(my_string):
     pos=0
     name=""
     text=""
-    sound_Tag=""
-    likes_number=""
-    comments_number=""
-    shares_number=""
-    date=""
+    play_times=""
+    Link_str=""
+    thumbnail=""
     for i in range(0,len(my_string)):
         if my_string[i]=="|":
             pos=pos+1
@@ -54,16 +52,12 @@ def return_contentof_element(my_string):
         if pos==1:
             text=text+my_string[i]
         if pos==2:
-            sound_Tag=sound_Tag+my_string[i]
+            play_times=play_times+my_string[i]
         if pos==3:
-            likes_number=likes_number+my_string[i]
+            Link_str=Link_str+my_string[i]
         if pos==4:
-            comments_number=comments_number+my_string[i]
-        if pos==5:
-            shares_number=shares_number+my_string[i]
-        if pos==6:
-            date=date+my_string[i];
-    record=["TikTok",name,text,sound_Tag,likes_number,comments_number,shares_number,date]
+            thumbnail=thumbnail+my_string[i]
+    record=["TikTok",name,text,play_times,Link_str,thumbnail]
     return record
 
 
@@ -112,7 +106,7 @@ def compute_result(Query,Input):
     thumbnails=[]
     record=""
     for ch in result:
-        if ch=='~':
+        if ch=='`':
             data.append(record)
             record=""
             continue
@@ -179,6 +173,7 @@ def compute_result(Query,Input):
                 Videos_Info.append(record)
             if type_source=="TikTok":
                 record=return_contentof_element(element)
+                print(record)
                 Videos_Info.append(record)
             coun=coun+1
     return Videos_Info
@@ -217,25 +212,19 @@ def SearchResult():
     print("previous_val=",previous_val)
     print("Query_current=",Query_current)
     if Query:
-        print("query")
         Input = Query[0]
         records=compute_result(Query,Input)
         List_Of_Result=records
         print("----------------------------")
-        print("ela")
         coun=len(records)
         sizes=coun/10
         sizes=int(sizes)
         if coun%10!=0:
             sizes=sizes+1
-        print("sizes=",sizes)
         n=sizes
         sub = grouper(0,records)
-        for i in range(0,len(sub)):
-            print("sub[i]=",sub[i])
         print(type(sub))
         size_sub_list=10
-        print("size_sub_list=",size_sub_list)
         return render_template('Result2.html',val=1,result_list=records,sub_list=sub,Search_value=Input,size=sizes,previous_val=Input,len_list=coun,size_sub_list=size_sub_list,chunks_num=sizes)
     if previous_val==Query_current[0]:
         Input = Query_current[0]
